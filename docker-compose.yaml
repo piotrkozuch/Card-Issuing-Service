@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  issuing-service:
+    build: .
+    ports:
+      - "9001:9001"
+  database:
+    image: "postgres:15-alpine"
+    environment:
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "secret"
+      POSTGRES_DB: "issuing_db"
+

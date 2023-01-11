@@ -1,0 +1,17 @@
+server:
+  port: 9001
+  servlet:
+    context-path: "/api/v0.1/"
+spring:
+  application:
+    name: "card-issuing-service"
+  main:
+    banner-mode: "console"
+  jpa:
+    hibernate:
+      ddl-auto: "validate"
+  datasource:
+    platform: "postgres"
+    url: "jdbc:postgresql://database:5432/issuing_db"
+    username: "admin"
+    password: "secret"

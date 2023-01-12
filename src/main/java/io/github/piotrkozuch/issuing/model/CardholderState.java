@@ -1,4 +1,4 @@
-package io.github.piotrkozuch.issuing.types;
+package io.github.piotrkozuch.issuing.model;
 
 public enum CardholderState {
     PENDING, ACTIVE, DISABLED

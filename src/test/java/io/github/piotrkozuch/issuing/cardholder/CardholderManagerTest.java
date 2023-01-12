@@ -7,7 +7,7 @@ import org.mockito.ArgumentCaptor;
 
 import java.util.Optional;
 
-import static io.github.piotrkozuch.issuing.types.CardholderState.PENDING;
+import static io.github.piotrkozuch.issuing.model.CardholderState.PENDING;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
@@ -23,8 +23,8 @@ class CardholderManagerTest implements CardholderTestData {
     @Test
     void should_throw_exception_if_cardholder_email_is_not_unique() {
         // given
-        var cardholder = createCardholder();
-        var billingAddress = extractBillingAddress(cardholder);
+        var billingAddress = aBillingAddress().build();
+        var cardholder = createCardholder(billingAddress);
 
         given(repository.findByEmail(cardholder.getEmail())).willReturn(Optional.of(cardholder));
 
@@ -46,8 +46,8 @@ class CardholderManagerTest implements CardholderTestData {
     @Test
     void should_create_new_cardholder() {
         // given
-        var cardholder = createCardholder();
-        var billingAddress = extractBillingAddress(cardholder);
+        var billingAddress = aBillingAddress().build();
+        var cardholder = createCardholder(billingAddress);
 
         given(repository.findByEmail(cardholder.getEmail())).willReturn(Optional.empty());
 

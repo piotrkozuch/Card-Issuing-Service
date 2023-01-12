@@ -1,13 +1,16 @@
 package io.github.piotrkozuch.issuing.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.github.piotrkozuch.issuing.types.BillingAddress;
 
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import static io.github.piotrkozuch.issuing.dto.CardholderCreatedResponse.Builder.cardholderCreatedResponse;
 import static io.github.piotrkozuch.issuing.utils.Checks.checkRequired;
 
+@JsonSerialize
 public class CardholderCreatedResponse {
 
     public final UUID id;
@@ -16,9 +19,33 @@ public class CardholderCreatedResponse {
     public final LocalDate birthDate;
     public final String email;
     public final String phone;
+    public final String state;
     public final BillingAddress billingAddress;
     public final Instant createdDate;
     public final Instant updatedDate;
+
+    public CardholderCreatedResponse(UUID id,
+                                     String firstName,
+                                     String lastName,
+                                     LocalDate birthDate,
+                                     String email,
+                                     String phone,
+                                     String state,
+                                     BillingAddress billingAddress,
+                                     Instant createdDate,
+                                     Instant updatedDate) {
+        this(cardholderCreatedResponse()
+            .id(id)
+            .firstName(firstName)
+            .lastName(lastName)
+            .birthDate(birthDate)
+            .email(email)
+            .phone(phone)
+            .state(state)
+            .billingAddress(billingAddress)
+            .createdDate(createdDate)
+            .updatedDate(updatedDate));
+    }
 
     private CardholderCreatedResponse(Builder builder) {
         id = checkRequired("id", builder.id);
@@ -27,6 +54,7 @@ public class CardholderCreatedResponse {
         birthDate = checkRequired("birthDate", builder.birthDate);
         email = checkRequired("email", builder.email);
         phone = checkRequired("phone", builder.phone);
+        state = checkRequired("state", builder.state);
         createdDate = checkRequired("createdDate", builder.createdDate);
         updatedDate = checkRequired("updatedDate", builder.updatedDate);
         billingAddress = checkRequired("billingAddress", builder.billingAddress);
@@ -40,6 +68,7 @@ public class CardholderCreatedResponse {
         private LocalDate birthDate;
         private String email;
         private String phone;
+        private String state;
         private BillingAddress billingAddress;
         private Instant createdDate;
         private Instant updatedDate;
@@ -68,6 +97,11 @@ public class CardholderCreatedResponse {
 
         public Builder lastName(String lastName) {
             this.lastName = lastName;
+            return this;
+        }
+
+        public Builder state(String state) {
+            this.state = state;
             return this;
         }
 

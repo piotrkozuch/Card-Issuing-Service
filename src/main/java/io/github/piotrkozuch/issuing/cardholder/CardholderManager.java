@@ -4,7 +4,7 @@ import io.github.piotrkozuch.issuing.exception.CardholderEmailNotUniqueException
 import io.github.piotrkozuch.issuing.model.Address;
 import io.github.piotrkozuch.issuing.model.Cardholder;
 import io.github.piotrkozuch.issuing.types.BillingAddress;
-import io.github.piotrkozuch.issuing.types.CardholderState;
+import io.github.piotrkozuch.issuing.model.CardholderState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

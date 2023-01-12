@@ -1,6 +1,5 @@
 package io.github.piotrkozuch.issuing.model;
 
-import io.github.piotrkozuch.issuing.types.CardholderState;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;

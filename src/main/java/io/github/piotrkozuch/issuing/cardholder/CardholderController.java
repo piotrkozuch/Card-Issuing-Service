@@ -3,7 +3,6 @@ package io.github.piotrkozuch.issuing.cardholder;
 import io.github.piotrkozuch.issuing.dto.CardholderCreateRequest;
 import io.github.piotrkozuch.issuing.dto.CardholderCreatedResponse;
 import io.github.piotrkozuch.issuing.model.Cardholder;
-import io.github.piotrkozuch.issuing.types.BillingAddress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import static io.github.piotrkozuch.issuing.dto.CardholderCreatedResponse.Builder.cardholderCreatedResponse;
+import static io.github.piotrkozuch.issuing.types.BillingAddress.Builder.billingAddress;
 import static io.github.piotrkozuch.issuing.utils.Checks.checkRequired;
 
 @RestController
@@ -39,13 +39,13 @@ public class CardholderController {
     }
 
     private CardholderCreatedResponse createCardholderCreatedResponse(Cardholder cardholder) {
-        final var billingAddress = new BillingAddress(
-            cardholder.getAddress().getStreetLine1(),
-            cardholder.getAddress().getStreetLine2(),
-            cardholder.getAddress().getCity(),
-            cardholder.getAddress().getCountry(),
-            cardholder.getAddress().getPostcode()
-        );
+        final var billingAddress = billingAddress()
+            .streetLine1(cardholder.getAddress().getStreetLine1())
+            .streetLine2(cardholder.getAddress().getStreetLine2())
+            .city(cardholder.getAddress().getCity())
+            .country(cardholder.getAddress().getCountry())
+            .postcode(cardholder.getAddress().getPostcode())
+            .build();
 
         return cardholderCreatedResponse()
             .id(cardholder.getId())
@@ -59,6 +59,7 @@ public class CardholderController {
             .email(cardholder.getEmail())
             .phone(cardholder.getPhone())
             .billingAddress(billingAddress)
+            .state(cardholder.getState().name())
             .build();
     }
 

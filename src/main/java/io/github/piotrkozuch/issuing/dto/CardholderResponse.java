@@ -1,17 +1,15 @@
 package io.github.piotrkozuch.issuing.dto;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.github.piotrkozuch.issuing.types.BillingAddress;
 
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import static io.github.piotrkozuch.issuing.dto.CardholderCreatedResponse.Builder.cardholderCreatedResponse;
+import static io.github.piotrkozuch.issuing.dto.CardholderResponse.Builder.cardholderResponse;
 import static io.github.piotrkozuch.issuing.utils.Checks.checkRequired;
 
-@JsonSerialize
-public class CardholderCreatedResponse {
+public class CardholderResponse {
 
     public final UUID id;
     public final String firstName;
@@ -24,17 +22,17 @@ public class CardholderCreatedResponse {
     public final Instant createdDate;
     public final Instant updatedDate;
 
-    public CardholderCreatedResponse(UUID id,
-                                     String firstName,
-                                     String lastName,
-                                     LocalDate birthDate,
-                                     String email,
-                                     String phone,
-                                     String state,
-                                     BillingAddress billingAddress,
-                                     Instant createdDate,
-                                     Instant updatedDate) {
-        this(cardholderCreatedResponse()
+    public CardholderResponse(UUID id,
+                              String firstName,
+                              String lastName,
+                              LocalDate birthDate,
+                              String email,
+                              String phone,
+                              String state,
+                              BillingAddress billingAddress,
+                              Instant createdDate,
+                              Instant updatedDate) {
+        this(cardholderResponse()
             .id(id)
             .firstName(firstName)
             .lastName(lastName)
@@ -47,7 +45,7 @@ public class CardholderCreatedResponse {
             .updatedDate(updatedDate));
     }
 
-    private CardholderCreatedResponse(Builder builder) {
+    private CardholderResponse(Builder builder) {
         id = checkRequired("id", builder.id);
         firstName = checkRequired("firstName", builder.firstName);
         lastName = checkRequired("lastName", builder.lastName);
@@ -77,11 +75,11 @@ public class CardholderCreatedResponse {
 
         }
 
-        public CardholderCreatedResponse build() {
-            return new CardholderCreatedResponse(this);
+        public CardholderResponse build() {
+            return new CardholderResponse(this);
         }
 
-        public static Builder cardholderCreatedResponse() {
+        public static Builder cardholderResponse() {
             return new Builder();
         }
 

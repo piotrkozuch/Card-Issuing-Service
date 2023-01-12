@@ -4,8 +4,11 @@ import io.github.piotrkozuch.issuing.model.Cardholder;
 import io.github.piotrkozuch.issuing.types.BillingAddress;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public interface CardholderService {
+
+    Cardholder activateCardholder(UUID id);
 
     Cardholder createCardholder(String firstName,
                                 String lastName,

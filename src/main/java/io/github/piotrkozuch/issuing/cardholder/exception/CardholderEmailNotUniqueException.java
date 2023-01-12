@@ -1,4 +1,4 @@
-package io.github.piotrkozuch.issuing.exception;
+package io.github.piotrkozuch.issuing.cardholder.exception;
 
 public class CardholderEmailNotUniqueException extends RuntimeException {
 

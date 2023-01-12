@@ -1,15 +1,19 @@
 package io.github.piotrkozuch.issuing.cardholder;
 
-import io.github.piotrkozuch.issuing.exception.CardholderEmailNotUniqueException;
+import io.github.piotrkozuch.issuing.cardholder.exception.CardholderEmailNotUniqueException;
 import io.github.piotrkozuch.issuing.model.Address;
 import io.github.piotrkozuch.issuing.model.Cardholder;
 import io.github.piotrkozuch.issuing.types.BillingAddress;
-import io.github.piotrkozuch.issuing.model.CardholderState;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.UUID;
+import java.util.function.Supplier;
 
+import static io.github.piotrkozuch.issuing.model.CardholderState.PENDING;
+import static java.lang.String.format;
 import static java.time.Instant.now;
 import static java.util.UUID.randomUUID;
 
@@ -23,6 +27,18 @@ public class CardholderManager implements CardholderService {
         this.repository = repository;
     }
 
+    @Override
+    public Cardholder activateCardholder(UUID id) {
+        final var cardholder = repository.findById(id).orElseThrow(entityNotFoundException(id));
+
+        return repository.save(cardholder.activate());
+    }
+
+    private Supplier<EntityNotFoundException> entityNotFoundException(UUID id) {
+        return () -> new EntityNotFoundException(format("Unable to find cardholder with id %s", id));
+    }
+
+    @Override
     public Cardholder createCardholder(String firstName,
                                        String lastName,
                                        LocalDate birthDate,
@@ -38,7 +54,7 @@ public class CardholderManager implements CardholderService {
         cardholder.setId(randomUUID());
         cardholder.setCreatedDate(timestamp);
         cardholder.setUpdatedDate(timestamp);
-        cardholder.setState(CardholderState.PENDING);
+        cardholder.setState(PENDING);
         cardholder.setFirstName(firstName);
         cardholder.setLastName(lastName);
         cardholder.setBirthDate(birthDate);

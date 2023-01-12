@@ -1,5 +1,6 @@
 package io.github.piotrkozuch.issuing.model;
 
+import io.github.piotrkozuch.issuing.cardholder.exception.CardholderChangeStateException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -13,6 +14,8 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
 
+import static io.github.piotrkozuch.issuing.model.CardholderState.ACTIVE;
+import static io.github.piotrkozuch.issuing.model.CardholderState.PENDING;
 import static io.github.piotrkozuch.issuing.utils.Checks.checkRequired;
 
 @Entity
@@ -127,11 +130,24 @@ public class Cardholder {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Cardholder that = (Cardholder) o;
-        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(birthDate, that.birthDate) && state == that.state && Objects.equals(phone, that.phone) && Objects.equals(email, that.email) && Objects.equals(createdDate, that.createdDate) && Objects.equals(updatedDate, that.updatedDate) && Objects.equals(address, that.address);
+        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(birthDate, that.birthDate) && Objects.equals(state, that.state) && Objects.equals(phone, that.phone) && Objects.equals(email, that.email) && Objects.equals(createdDate, that.createdDate) && Objects.equals(updatedDate, that.updatedDate) && Objects.equals(address, that.address);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, firstName, lastName, birthDate, state, phone, email, createdDate, updatedDate, address);
+    }
+
+    public Cardholder activate() {
+        if (hasState(PENDING)) {
+            setState(ACTIVE);
+            return this;
+        }
+
+        throw new CardholderChangeStateException(id, getState(), PENDING);
+    }
+
+    public boolean hasState(CardholderState state) {
+        return getState() == checkRequired("state", state);
     }
 }

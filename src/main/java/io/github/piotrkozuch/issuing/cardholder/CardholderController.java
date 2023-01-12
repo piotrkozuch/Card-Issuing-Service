@@ -1,16 +1,20 @@
 package io.github.piotrkozuch.issuing.cardholder;
 
 import io.github.piotrkozuch.issuing.dto.CardholderCreateRequest;
-import io.github.piotrkozuch.issuing.dto.CardholderCreatedResponse;
+import io.github.piotrkozuch.issuing.dto.CardholderResponse;
 import io.github.piotrkozuch.issuing.model.Cardholder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import static io.github.piotrkozuch.issuing.dto.CardholderCreatedResponse.Builder.cardholderCreatedResponse;
+import java.util.UUID;
+
+import static io.github.piotrkozuch.issuing.dto.CardholderResponse.Builder.cardholderResponse;
 import static io.github.piotrkozuch.issuing.types.BillingAddress.Builder.billingAddress;
 import static io.github.piotrkozuch.issuing.utils.Checks.checkRequired;
 
@@ -27,7 +31,7 @@ public class CardholderController {
 
     @PostMapping
     @ResponseBody
-    public CardholderCreatedResponse createCardholder(@RequestBody CardholderCreateRequest request) {
+    public CardholderResponse createCardholder(@RequestBody CardholderCreateRequest request) {
         final var cardholder = cardholderService.createCardholder(request.firstName,
             request.lastName,
             request.birthDate,
@@ -35,10 +39,18 @@ public class CardholderController {
             request.phone,
             request.billingAddress);
 
-        return createCardholderCreatedResponse(cardholder);
+        return createCardholderResponse(cardholder);
     }
 
-    private CardholderCreatedResponse createCardholderCreatedResponse(Cardholder cardholder) {
+    @PatchMapping("/activate/{id}")
+    @ResponseBody
+    public CardholderResponse activateCardholder(@PathVariable UUID id) {
+        final var cardholder = cardholderService.activateCardholder(id);
+
+        return createCardholderResponse(cardholder);
+    }
+
+    private CardholderResponse createCardholderResponse(Cardholder cardholder) {
         final var billingAddress = billingAddress()
             .streetLine1(cardholder.getAddress().getStreetLine1())
             .streetLine2(cardholder.getAddress().getStreetLine2())
@@ -47,7 +59,7 @@ public class CardholderController {
             .postcode(cardholder.getAddress().getPostcode())
             .build();
 
-        return cardholderCreatedResponse()
+        return cardholderResponse()
             .id(cardholder.getId())
             .createdDate(cardholder.getCreatedDate())
             .updatedDate(cardholder.getUpdatedDate())

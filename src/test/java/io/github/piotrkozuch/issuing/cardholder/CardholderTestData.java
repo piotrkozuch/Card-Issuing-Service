@@ -16,11 +16,15 @@ import static java.util.UUID.randomUUID;
 
 public interface CardholderTestData {
 
+    default Cardholder createCardholder(){
+        return createCardholder(aBillingAddress().build());
+    }
+
     default Cardholder createCardholder(BillingAddress billingAddress) {
         final var cardholder = new Cardholder();
         cardholder.setId(randomUUID());
         cardholder.setCreatedDate(now());
-        cardholder.setCreatedDate(now());
+        cardholder.setUpdatedDate(now());
         cardholder.setState(CardholderState.PENDING);
         cardholder.setFirstName("Joe");
         cardholder.setLastName("Doe");

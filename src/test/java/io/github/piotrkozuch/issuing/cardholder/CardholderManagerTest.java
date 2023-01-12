@@ -1,15 +1,18 @@
 package io.github.piotrkozuch.issuing.cardholder;
 
-import io.github.piotrkozuch.issuing.exception.CardholderEmailNotUniqueException;
+import io.github.piotrkozuch.issuing.cardholder.exception.CardholderEmailNotUniqueException;
 import io.github.piotrkozuch.issuing.model.Cardholder;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
 import java.util.Optional;
 
+import static io.github.piotrkozuch.issuing.model.CardholderState.ACTIVE;
 import static io.github.piotrkozuch.issuing.model.CardholderState.PENDING;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -78,5 +81,35 @@ class CardholderManagerTest implements CardholderTestData {
 
         verify(repository).findByEmail(cardholder.getEmail());
         verifyNoMoreInteractions(repository);
+    }
+
+    @Test
+    void should_activate_cardholder() {
+        // given
+        var cardholder = createCardholder();
+
+        given(repository.findById(cardholder.getId())).willReturn(Optional.of(cardholder));
+        given(repository.save(any())).willReturn(cardholder);
+
+        // when
+        var activeCardholder = manager.activateCardholder(cardholder.getId());
+
+        // then
+        assertThat(activeCardholder.hasState(ACTIVE)).isTrue();
+        verify(repository).findById(cardholder.getId());
+        verify(repository).save(activeCardholder);
+        verifyNoMoreInteractions(repository);
+    }
+
+    @Test
+    void should_throw_exception_on_activation_when_cardholder_does_not_exist() {
+        // given
+        var cardholder = createCardholder();
+
+        given(repository.findById(cardholder.getId())).willReturn(Optional.empty());
+
+        // expected
+        assertThatThrownBy(() -> manager.activateCardholder(cardholder.getId()))
+            .isInstanceOf(EntityNotFoundException.class);
     }
 }

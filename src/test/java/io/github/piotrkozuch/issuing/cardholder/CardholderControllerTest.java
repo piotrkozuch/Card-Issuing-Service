@@ -1,13 +1,16 @@
 package io.github.piotrkozuch.issuing.cardholder;
 
-import io.github.piotrkozuch.issuing.dto.CardholderCreatedResponse;
+import io.github.piotrkozuch.issuing.dto.CardholderResponse;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 
+import static io.github.piotrkozuch.issuing.model.CardholderState.ACTIVE;
 import static io.github.piotrkozuch.issuing.model.CardholderState.PENDING;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -23,6 +26,12 @@ class CardholderControllerTest implements CardholderTestData {
     @Autowired
     private CardholderRepository cardholderRepository;
 
+    @BeforeEach
+    void setup() {
+        restTemplate.getRestTemplate().setRequestFactory(new HttpComponentsClientHttpRequestFactory());
+        cardholderRepository.deleteAll();
+    }
+
     @Test
     void should_create_new_cardholder() {
         // given
@@ -30,7 +39,7 @@ class CardholderControllerTest implements CardholderTestData {
         var request = aCardholderCreateRequest().build();
 
         // when
-        var response = restTemplate.postForEntity(url, request, CardholderCreatedResponse.class);
+        var response = restTemplate.postForEntity(url, request, CardholderResponse.class);
 
         // then
         assertThat(response).isNotNull();
@@ -54,6 +63,20 @@ class CardholderControllerTest implements CardholderTestData {
         assertThat(body.id).isNotNull();
 
         assertThat(cardholderRepository.findById(body.id)).isPresent();
+    }
+
+    @Test
+    void should_activate_cardholder() {
+        // given
+        var cardholder = cardholderRepository.save(createCardholder());
+        var url = urlFor("/api/v0.1/cardholders/activate/" + cardholder.getId());
+
+        // when
+        var response = restTemplate.patchForObject(url, null, CardholderResponse.class);
+
+        // then
+        var updatedCardholder = cardholderRepository.findById(response.id).get();
+        assertThat(updatedCardholder.getState()).isEqualTo(ACTIVE);
     }
 
     private String urlFor(String path) {

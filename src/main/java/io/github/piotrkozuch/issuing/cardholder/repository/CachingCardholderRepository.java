@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static io.github.piotrkozuch.issuing.cardholder.exception.CardholderExceptions.cardholderNotFoundException;
 import static io.github.piotrkozuch.issuing.model.CardholderState.DELETED;
 import static io.github.piotrkozuch.issuing.utils.Checks.checkRequired;
 
@@ -38,13 +37,5 @@ public class CachingCardholderRepository implements CardholderRepository {
     @Override
     public List<Cardholder> findAll() {
         return cardholderJpaRepository.findAllNotDeleted();
-    }
-
-    @Override
-    public void delete(UUID id) {
-        var cardholder = cardholderJpaRepository.findByIdAndStateNot(id, DELETED)
-            .orElseThrow(cardholderNotFoundException(id));
-
-        cardholderJpaRepository.save(cardholder.delete());
     }
 }

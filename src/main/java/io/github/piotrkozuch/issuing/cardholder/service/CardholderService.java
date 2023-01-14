@@ -1,4 +1,4 @@
-package io.github.piotrkozuch.issuing.cardholder;
+package io.github.piotrkozuch.issuing.cardholder.service;
 
 import io.github.piotrkozuch.issuing.model.Cardholder;
 import io.github.piotrkozuch.issuing.types.BillingAddress;

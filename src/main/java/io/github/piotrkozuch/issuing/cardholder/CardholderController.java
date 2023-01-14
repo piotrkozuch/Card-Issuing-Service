@@ -1,5 +1,6 @@
 package io.github.piotrkozuch.issuing.cardholder;
 
+import io.github.piotrkozuch.issuing.cardholder.service.CardholderService;
 import io.github.piotrkozuch.issuing.dto.CardholderCreateRequest;
 import io.github.piotrkozuch.issuing.dto.CardholderResponse;
 import io.github.piotrkozuch.issuing.model.Cardholder;

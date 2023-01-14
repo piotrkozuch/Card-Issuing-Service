@@ -17,6 +17,6 @@ public interface CardholderJpaRepository extends JpaRepository<Cardholder, UUID>
 
     Optional<Cardholder> findByIdAndStateNot(UUID id, CardholderState state);
 
-    @Query(value = "SELECT * FROM cardholders WHERE state != 'DELETED'", nativeQuery = true)
+    @Query(nativeQuery = true, value = "SELECT * FROM cardholders WHERE state != 'DELETED'")
     List<Cardholder> findAllNotDeleted();
 }

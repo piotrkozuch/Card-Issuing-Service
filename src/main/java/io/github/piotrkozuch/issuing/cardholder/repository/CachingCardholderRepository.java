@@ -37,7 +37,7 @@ public class CachingCardholderRepository implements CardholderRepository {
 
     @Override
     public List<Cardholder> findAll() {
-        return cardholderJpaRepository.findAll();
+        return cardholderJpaRepository.findAllNotDeleted();
     }
 
     @Override

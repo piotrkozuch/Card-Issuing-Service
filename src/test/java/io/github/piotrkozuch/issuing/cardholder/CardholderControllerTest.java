@@ -16,6 +16,7 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import java.util.stream.Stream;
 
 import static io.github.piotrkozuch.issuing.model.CardholderState.ACTIVE;
+import static io.github.piotrkozuch.issuing.model.CardholderState.DELETED;
 import static io.github.piotrkozuch.issuing.model.CardholderState.PENDING;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -104,10 +105,25 @@ class CardholderControllerTest implements CardholderTestData {
     }
 
     @Test
+    void should_delete_cardholder() {
+        // given
+        var cardholder = cardholderJpaRepository.save(createCardholder());
+        var url = urlFor("/api/v0.1/cardholders/" + cardholder.getId());
+
+        // when
+        restTemplate.delete(url);
+
+        // then
+        var deletedCardholder = cardholderJpaRepository.findById(cardholder.getId()).get();
+        assertThat(deletedCardholder.getState()).isEqualTo(DELETED);
+    }
+
+    @Test
     void should_get_all_cardholders() {
         // given
         var cardholder1 = cardholderJpaRepository.save(createCardholder());
         var cardholder2 = cardholderJpaRepository.save(createCardholder());
+        var cardholder3 = cardholderJpaRepository.save(createCardholder().delete());
         var url = urlFor("/api/v0.1/cardholders");
 
         // when
@@ -122,6 +138,7 @@ class CardholderControllerTest implements CardholderTestData {
 
         assertThat(Stream.of(cardholders).map(c -> c.id).anyMatch(id -> cardholder1.getId().equals(id))).isTrue();
         assertThat(Stream.of(cardholders).map(c -> c.id).anyMatch(id -> cardholder2.getId().equals(id))).isTrue();
+        assertThat(Stream.of(cardholders).map(c -> c.id).anyMatch(id -> cardholder3.getId().equals(id))).isFalse();
     }
 
     private String urlFor(String path) {

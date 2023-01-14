@@ -1,5 +1,8 @@
-package io.github.piotrkozuch.issuing.model.card;
+package io.github.piotrkozuch.issuing.card.model;
 
+import io.github.piotrkozuch.issuing.common.types.CardBrand;
+import io.github.piotrkozuch.issuing.common.types.CardType;
+import io.github.piotrkozuch.issuing.common.types.Currency;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -40,6 +43,10 @@ public class Card {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private CardType type;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Currency currency;
 
     @Column(nullable = false)
     private Instant createdDate;
@@ -119,16 +126,24 @@ public class Card {
         this.updatedDate = checkRequired("updatedDate", updatedDate);
     }
 
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
-        return Objects.equals(id, card.id) && Objects.equals(cardholderId, card.cardholderId) && state == card.state && Objects.equals(maskedPan, card.maskedPan) && Objects.equals(token, card.token) && brand == card.brand && type == card.type && Objects.equals(createdDate, card.createdDate) && Objects.equals(updatedDate, card.updatedDate);
+        return Objects.equals(id, card.id) && Objects.equals(cardholderId, card.cardholderId) && state == card.state && Objects.equals(maskedPan, card.maskedPan) && Objects.equals(token, card.token) && brand == card.brand && type == card.type && Objects.equals(currency, card.currency) && Objects.equals(createdDate, card.createdDate) && Objects.equals(updatedDate, card.updatedDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, cardholderId, state, maskedPan, token, brand, type, createdDate, updatedDate);
+        return Objects.hash(id, cardholderId, state, maskedPan, token, brand, type, currency, createdDate, updatedDate);
     }
 }

@@ -1,7 +1,7 @@
 package io.github.piotrkozuch.issuing.cardholder.service;
 
-import io.github.piotrkozuch.issuing.model.cardholder.Cardholder;
-import io.github.piotrkozuch.issuing.types.BillingAddress;
+import io.github.piotrkozuch.issuing.cardholder.model.Cardholder;
+import io.github.piotrkozuch.issuing.common.dto.BillingAddress;
 
 import java.time.LocalDate;
 import java.util.List;

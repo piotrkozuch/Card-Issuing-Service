@@ -1,4 +1,4 @@
-package io.github.piotrkozuch.issuing.model.card;
+package io.github.piotrkozuch.issuing.card.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,6 +25,9 @@ public class CardSensitiveDetails {
 
     @Column(nullable = false)
     private String cvv;
+
+    @Column(nullable = false, unique = true)
+    private String pan;
 
     @Column(nullable = false)
     private int expiryMonth;
@@ -57,7 +60,7 @@ public class CardSensitiveDetails {
         return cardId;
     }
 
-    public void setCard_id(UUID cardId) {
+    public void setCardId(UUID cardId) {
         this.cardId = checkRequired("cardId", cardId);
     }
 
@@ -117,16 +120,24 @@ public class CardSensitiveDetails {
         this.updatedDate = checkRequired("updatedDate", updatedDate);
     }
 
+    public String getPan() {
+        return pan;
+    }
+
+    public void setPan(String pan) {
+        this.pan = pan;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CardSensitiveDetails that = (CardSensitiveDetails) o;
-        return expiryMonth == that.expiryMonth && expiryYear == that.expiryYear && Objects.equals(id, that.id) && Objects.equals(cardId, that.cardId) && Objects.equals(cvv, that.cvv) && Objects.equals(nameOnCard, that.nameOnCard) && state == that.state && Objects.equals(createdDate, that.createdDate) && Objects.equals(updatedDate, that.updatedDate);
+        return expiryMonth == that.expiryMonth && expiryYear == that.expiryYear && Objects.equals(id, that.id) && Objects.equals(cardId, that.cardId) && Objects.equals(cvv, that.cvv) && Objects.equals(pan, that.pan) && Objects.equals(nameOnCard, that.nameOnCard) && state == that.state && Objects.equals(createdDate, that.createdDate) && Objects.equals(updatedDate, that.updatedDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, cardId, cvv, expiryMonth, expiryYear, nameOnCard, state, createdDate, updatedDate);
+        return Objects.hash(id, cardId, cvv, pan, expiryMonth, expiryYear, nameOnCard, state, createdDate, updatedDate);
     }
 }

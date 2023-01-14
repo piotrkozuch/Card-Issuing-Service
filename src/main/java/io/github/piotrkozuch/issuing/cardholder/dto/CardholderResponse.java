@@ -1,12 +1,12 @@
-package io.github.piotrkozuch.issuing.dto;
+package io.github.piotrkozuch.issuing.cardholder.dto;
 
-import io.github.piotrkozuch.issuing.types.BillingAddress;
+import io.github.piotrkozuch.issuing.common.dto.BillingAddress;
 
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import static io.github.piotrkozuch.issuing.dto.CardholderResponse.Builder.cardholderResponse;
+import static io.github.piotrkozuch.issuing.cardholder.dto.CardholderResponse.Builder.cardholderResponse;
 import static io.github.piotrkozuch.issuing.utils.Checks.checkRequired;
 
 public class CardholderResponse {

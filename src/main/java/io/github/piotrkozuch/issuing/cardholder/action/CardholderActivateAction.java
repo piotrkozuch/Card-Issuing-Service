@@ -2,7 +2,7 @@ package io.github.piotrkozuch.issuing.cardholder.action;
 
 import io.github.piotrkozuch.issuing.action.Action;
 import io.github.piotrkozuch.issuing.cardholder.repository.CardholderRepository;
-import io.github.piotrkozuch.issuing.model.cardholder.Cardholder;
+import io.github.piotrkozuch.issuing.cardholder.model.Cardholder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,14 +1,14 @@
-package io.github.piotrkozuch.issuing.model;
+package io.github.piotrkozuch.issuing.cardholder.model;
 
 import io.github.piotrkozuch.issuing.cardholder.CardholderTestData;
 import io.github.piotrkozuch.issuing.cardholder.exception.CardholderChangeStateException;
-import io.github.piotrkozuch.issuing.model.cardholder.CardholderState;
+import io.github.piotrkozuch.issuing.cardholder.model.CardholderState;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
-import static io.github.piotrkozuch.issuing.model.cardholder.CardholderState.ACTIVE;
-import static io.github.piotrkozuch.issuing.model.cardholder.CardholderState.DELETED;
+import static io.github.piotrkozuch.issuing.cardholder.model.CardholderState.ACTIVE;
+import static io.github.piotrkozuch.issuing.cardholder.model.CardholderState.DELETED;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

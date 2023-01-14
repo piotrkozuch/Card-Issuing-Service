@@ -1,7 +1,7 @@
-package io.github.piotrkozuch.issuing.model.cardholder;
+package io.github.piotrkozuch.issuing.cardholder.model;
 
 import io.github.piotrkozuch.issuing.cardholder.exception.CardholderChangeStateException;
-import io.github.piotrkozuch.issuing.model.Address;
+import io.github.piotrkozuch.issuing.common.types.Address;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -15,9 +15,9 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
 
-import static io.github.piotrkozuch.issuing.model.cardholder.CardholderState.ACTIVE;
-import static io.github.piotrkozuch.issuing.model.cardholder.CardholderState.DELETED;
-import static io.github.piotrkozuch.issuing.model.cardholder.CardholderState.PENDING;
+import static io.github.piotrkozuch.issuing.cardholder.model.CardholderState.ACTIVE;
+import static io.github.piotrkozuch.issuing.cardholder.model.CardholderState.DELETED;
+import static io.github.piotrkozuch.issuing.cardholder.model.CardholderState.PENDING;
 import static io.github.piotrkozuch.issuing.utils.Checks.checkRequired;
 
 @Entity

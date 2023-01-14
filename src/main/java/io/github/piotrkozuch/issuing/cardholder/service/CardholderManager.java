@@ -4,8 +4,8 @@ import io.github.piotrkozuch.issuing.cardholder.action.CardholderActivateAction;
 import io.github.piotrkozuch.issuing.cardholder.action.CardholderCreateAction;
 import io.github.piotrkozuch.issuing.cardholder.action.CardholderDeleteAction;
 import io.github.piotrkozuch.issuing.cardholder.repository.CardholderRepository;
-import io.github.piotrkozuch.issuing.model.cardholder.Cardholder;
-import io.github.piotrkozuch.issuing.types.BillingAddress;
+import io.github.piotrkozuch.issuing.cardholder.model.Cardholder;
+import io.github.piotrkozuch.issuing.common.dto.BillingAddress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

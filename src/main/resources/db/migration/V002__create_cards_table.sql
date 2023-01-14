@@ -6,6 +6,7 @@ CREATE TABLE cards (
     token           UUID            NOT NULL UNIQUE,
     type            VARCHAR(40)     NOT NULL,
     brand           VARCHAR(40)     NOT NULL,
+    currency        VARCHAR(3)      NOT NULL,
     created_date    TIMESTAMP       NOT NULL,
     updated_date    TIMESTAMP       NOT NULL,
 

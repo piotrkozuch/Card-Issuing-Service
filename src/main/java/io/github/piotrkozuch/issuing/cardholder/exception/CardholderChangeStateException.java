@@ -1,6 +1,6 @@
 package io.github.piotrkozuch.issuing.cardholder.exception;
 
-import io.github.piotrkozuch.issuing.model.cardholder.CardholderState;
+import io.github.piotrkozuch.issuing.cardholder.model.CardholderState;
 
 import java.util.UUID;
 

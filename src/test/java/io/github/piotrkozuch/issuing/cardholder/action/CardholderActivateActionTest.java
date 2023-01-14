@@ -2,10 +2,10 @@ package io.github.piotrkozuch.issuing.cardholder.action;
 
 import io.github.piotrkozuch.issuing.cardholder.CardholderTestData;
 import io.github.piotrkozuch.issuing.cardholder.repository.CardholderRepository;
-import io.github.piotrkozuch.issuing.model.cardholder.Cardholder;
+import io.github.piotrkozuch.issuing.cardholder.model.Cardholder;
 import org.junit.jupiter.api.Test;
 
-import static io.github.piotrkozuch.issuing.model.cardholder.CardholderState.ACTIVE;
+import static io.github.piotrkozuch.issuing.cardholder.model.CardholderState.ACTIVE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;

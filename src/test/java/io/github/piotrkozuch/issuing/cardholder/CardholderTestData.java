@@ -1,17 +1,17 @@
 package io.github.piotrkozuch.issuing.cardholder;
 
-import io.github.piotrkozuch.issuing.dto.CardholderCreateRequest;
-import io.github.piotrkozuch.issuing.model.Address;
-import io.github.piotrkozuch.issuing.model.cardholder.Cardholder;
-import io.github.piotrkozuch.issuing.model.cardholder.CardholderState;
-import io.github.piotrkozuch.issuing.types.BillingAddress;
+import io.github.piotrkozuch.issuing.cardholder.dto.CardholderCreateRequest;
+import io.github.piotrkozuch.issuing.common.types.Address;
+import io.github.piotrkozuch.issuing.cardholder.model.Cardholder;
+import io.github.piotrkozuch.issuing.cardholder.model.CardholderState;
+import io.github.piotrkozuch.issuing.common.dto.BillingAddress;
 
 import java.time.LocalDate;
 import java.util.Random;
 
 import static com.neovisionaries.i18n.CountryCode.PL;
-import static io.github.piotrkozuch.issuing.dto.CardholderCreateRequest.Builder.cardholderCreateRequest;
-import static io.github.piotrkozuch.issuing.types.BillingAddress.Builder.billingAddress;
+import static io.github.piotrkozuch.issuing.cardholder.dto.CardholderCreateRequest.Builder.cardholderCreateRequest;
+import static io.github.piotrkozuch.issuing.common.dto.BillingAddress.Builder.billingAddress;
 import static java.time.Instant.now;
 import static java.util.UUID.randomUUID;
 

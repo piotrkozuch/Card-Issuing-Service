@@ -1,4 +1,4 @@
-package io.github.piotrkozuch.issuing.model.card;
+package io.github.piotrkozuch.issuing.common.types;
 
 public enum CardType {
     PREPAID, DEBIT, CREDIT

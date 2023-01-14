@@ -1,4 +1,4 @@
-package io.github.piotrkozuch.issuing.model.card;
+package io.github.piotrkozuch.issuing.card.model;
 
 public enum CardSensitiveDetailsState {
     ACTIVE, DELETED

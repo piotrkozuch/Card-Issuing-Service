@@ -1,12 +1,12 @@
 package io.github.piotrkozuch.issuing.cardholder.repository;
 
-import io.github.piotrkozuch.issuing.model.cardholder.Cardholder;
+import io.github.piotrkozuch.issuing.cardholder.model.Cardholder;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static io.github.piotrkozuch.issuing.model.cardholder.CardholderState.DELETED;
+import static io.github.piotrkozuch.issuing.cardholder.model.CardholderState.DELETED;
 import static io.github.piotrkozuch.issuing.utils.Checks.checkRequired;
 
 public class CachingCardholderRepository implements CardholderRepository {

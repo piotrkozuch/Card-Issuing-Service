@@ -1,9 +1,9 @@
 package io.github.piotrkozuch.issuing.cardholder;
 
 import io.github.piotrkozuch.issuing.cardholder.repository.CardholderJpaRepository;
-import io.github.piotrkozuch.issuing.dto.CardholderResponse;
-import io.github.piotrkozuch.issuing.model.cardholder.Cardholder;
-import io.github.piotrkozuch.issuing.model.cardholder.CardholderState;
+import io.github.piotrkozuch.issuing.cardholder.dto.CardholderResponse;
+import io.github.piotrkozuch.issuing.cardholder.model.Cardholder;
+import io.github.piotrkozuch.issuing.cardholder.model.CardholderState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +15,9 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 
 import java.util.stream.Stream;
 
-import static io.github.piotrkozuch.issuing.model.cardholder.CardholderState.ACTIVE;
-import static io.github.piotrkozuch.issuing.model.cardholder.CardholderState.DELETED;
-import static io.github.piotrkozuch.issuing.model.cardholder.CardholderState.PENDING;
+import static io.github.piotrkozuch.issuing.cardholder.model.CardholderState.ACTIVE;
+import static io.github.piotrkozuch.issuing.cardholder.model.CardholderState.DELETED;
+import static io.github.piotrkozuch.issuing.cardholder.model.CardholderState.PENDING;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)

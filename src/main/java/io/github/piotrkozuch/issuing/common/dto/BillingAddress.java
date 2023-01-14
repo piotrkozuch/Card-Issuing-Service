@@ -1,4 +1,4 @@
-package io.github.piotrkozuch.issuing.types;
+package io.github.piotrkozuch.issuing.common.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;

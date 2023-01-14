@@ -1,4 +1,4 @@
-package io.github.piotrkozuch.issuing.model;
+package io.github.piotrkozuch.issuing.common.types;
 
 import com.neovisionaries.i18n.CountryCode;
 import jakarta.persistence.Column;

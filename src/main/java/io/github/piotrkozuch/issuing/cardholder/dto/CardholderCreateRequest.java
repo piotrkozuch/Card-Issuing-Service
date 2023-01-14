@@ -1,8 +1,8 @@
-package io.github.piotrkozuch.issuing.dto;
+package io.github.piotrkozuch.issuing.cardholder.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import io.github.piotrkozuch.issuing.types.BillingAddress;
+import io.github.piotrkozuch.issuing.common.dto.BillingAddress;
 
 import java.time.LocalDate;
 

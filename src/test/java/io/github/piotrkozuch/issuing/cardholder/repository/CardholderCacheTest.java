@@ -1,13 +1,13 @@
 package io.github.piotrkozuch.issuing.cardholder.repository;
 
 import io.github.piotrkozuch.issuing.cardholder.CardholderTestData;
-import io.github.piotrkozuch.issuing.model.cardholder.Cardholder;
+import io.github.piotrkozuch.issuing.cardholder.model.Cardholder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static io.github.piotrkozuch.issuing.model.cardholder.CardholderState.DELETED;
+import static io.github.piotrkozuch.issuing.cardholder.model.CardholderState.DELETED;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;

@@ -17,5 +17,5 @@ CREATE TABLE cardholders (
     CONSTRAINT cardholders_unique_email_constraint UNIQUE(email)
 );
 
-CREATE UNIQUE INDEX IF NOT EXISTS cardholders_email_index on cardholders(email);
-CREATE INDEX IF NOT EXISTS cardholders_created_date_index on cardholders(created_date);
+CREATE UNIQUE INDEX IF NOT EXISTS cardholders_email_index ON cardholders(email);
+CREATE INDEX IF NOT EXISTS cardholders_created_date_index ON cardholders(created_date);

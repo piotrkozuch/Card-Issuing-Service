@@ -2,8 +2,8 @@ package io.github.piotrkozuch.issuing.cardholder;
 
 import io.github.piotrkozuch.issuing.dto.CardholderCreateRequest;
 import io.github.piotrkozuch.issuing.model.Address;
-import io.github.piotrkozuch.issuing.model.Cardholder;
-import io.github.piotrkozuch.issuing.model.CardholderState;
+import io.github.piotrkozuch.issuing.model.cardholder.Cardholder;
+import io.github.piotrkozuch.issuing.model.cardholder.CardholderState;
 import io.github.piotrkozuch.issuing.types.BillingAddress;
 
 import java.time.LocalDate;

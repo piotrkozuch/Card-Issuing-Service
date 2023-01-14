@@ -2,7 +2,7 @@ package io.github.piotrkozuch.issuing.cardholder.repository;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import io.github.piotrkozuch.issuing.model.Cardholder;
+import io.github.piotrkozuch.issuing.model.cardholder.Cardholder;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static io.github.piotrkozuch.issuing.cardholder.exception.CardholderExceptions.cardholderNotFoundException;
-import static io.github.piotrkozuch.issuing.model.CardholderState.DELETED;
+import static io.github.piotrkozuch.issuing.model.cardholder.CardholderState.DELETED;
 import static io.github.piotrkozuch.issuing.utils.Checks.checkRequired;
 
 public class CardholderCache {

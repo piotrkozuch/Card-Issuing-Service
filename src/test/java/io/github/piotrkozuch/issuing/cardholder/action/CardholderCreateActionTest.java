@@ -3,13 +3,13 @@ package io.github.piotrkozuch.issuing.cardholder.action;
 import io.github.piotrkozuch.issuing.cardholder.CardholderTestData;
 import io.github.piotrkozuch.issuing.cardholder.exception.CardholderEmailNotUniqueException;
 import io.github.piotrkozuch.issuing.cardholder.repository.CardholderRepository;
-import io.github.piotrkozuch.issuing.model.Cardholder;
+import io.github.piotrkozuch.issuing.model.cardholder.Cardholder;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
 import java.util.Optional;
 
-import static io.github.piotrkozuch.issuing.model.CardholderState.PENDING;
+import static io.github.piotrkozuch.issuing.model.cardholder.CardholderState.PENDING;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;

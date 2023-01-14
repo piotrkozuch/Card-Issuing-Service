@@ -1,7 +1,7 @@
 package io.github.piotrkozuch.issuing.cardholder.repository;
 
-import io.github.piotrkozuch.issuing.model.Cardholder;
-import io.github.piotrkozuch.issuing.model.CardholderState;
+import io.github.piotrkozuch.issuing.model.cardholder.Cardholder;
+import io.github.piotrkozuch.issuing.model.cardholder.CardholderState;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

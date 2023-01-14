@@ -15,13 +15,17 @@ public class Address {
 
     @Column(name = "street_line_1", nullable = false)
     private String streetLine1;
+
     @Column(name = "street_line_2")
     private String streetLine2;
+
     @Column(nullable = false)
     private String city;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private CountryCode country;
+
     @Column(nullable = false)
     private String postcode;
 

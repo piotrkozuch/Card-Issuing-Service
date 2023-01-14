@@ -4,7 +4,7 @@ import io.github.piotrkozuch.issuing.action.Action;
 import io.github.piotrkozuch.issuing.cardholder.exception.CardholderEmailNotUniqueException;
 import io.github.piotrkozuch.issuing.cardholder.repository.CardholderRepository;
 import io.github.piotrkozuch.issuing.model.Address;
-import io.github.piotrkozuch.issuing.model.Cardholder;
+import io.github.piotrkozuch.issuing.model.cardholder.Cardholder;
 import io.github.piotrkozuch.issuing.types.BillingAddress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
 
-import static io.github.piotrkozuch.issuing.model.CardholderState.PENDING;
+import static io.github.piotrkozuch.issuing.model.cardholder.CardholderState.PENDING;
 import static io.github.piotrkozuch.issuing.utils.Checks.checkRequired;
 import static java.time.Instant.now;
 import static java.util.UUID.randomUUID;

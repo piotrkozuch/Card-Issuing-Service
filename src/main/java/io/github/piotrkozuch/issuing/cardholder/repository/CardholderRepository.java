@@ -1,6 +1,6 @@
 package io.github.piotrkozuch.issuing.cardholder.repository;
 
-import io.github.piotrkozuch.issuing.model.Cardholder;
+import io.github.piotrkozuch.issuing.model.cardholder.Cardholder;
 
 import java.util.List;
 import java.util.Optional;

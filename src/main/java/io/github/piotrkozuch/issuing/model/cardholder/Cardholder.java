@@ -1,6 +1,7 @@
-package io.github.piotrkozuch.issuing.model;
+package io.github.piotrkozuch.issuing.model.cardholder;
 
 import io.github.piotrkozuch.issuing.cardholder.exception.CardholderChangeStateException;
+import io.github.piotrkozuch.issuing.model.Address;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -14,9 +15,9 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
 
-import static io.github.piotrkozuch.issuing.model.CardholderState.ACTIVE;
-import static io.github.piotrkozuch.issuing.model.CardholderState.DELETED;
-import static io.github.piotrkozuch.issuing.model.CardholderState.PENDING;
+import static io.github.piotrkozuch.issuing.model.cardholder.CardholderState.ACTIVE;
+import static io.github.piotrkozuch.issuing.model.cardholder.CardholderState.DELETED;
+import static io.github.piotrkozuch.issuing.model.cardholder.CardholderState.PENDING;
 import static io.github.piotrkozuch.issuing.utils.Checks.checkRequired;
 
 @Entity
@@ -25,21 +26,29 @@ public class Cardholder {
 
     @Id
     private UUID id;
+
     @Column(nullable = false)
     private String firstName;
+
     @Column(nullable = false)
     private String lastName;
+
     @Column(nullable = false)
     private LocalDate birthDate;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private CardholderState state;
+
     @Column(nullable = false)
     private String phone;
+
     @Column(nullable = false, unique = true)
     private String email;
+
     @Column(nullable = false)
     private Instant createdDate;
+
     @Column(nullable = false)
     private Instant updatedDate;
 

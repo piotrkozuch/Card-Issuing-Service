@@ -7,6 +7,7 @@ import io.github.piotrkozuch.issuing.model.CardholderState;
 import io.github.piotrkozuch.issuing.types.BillingAddress;
 
 import java.time.LocalDate;
+import java.util.Random;
 
 import static com.neovisionaries.i18n.CountryCode.PL;
 import static io.github.piotrkozuch.issuing.dto.CardholderCreateRequest.Builder.cardholderCreateRequest;
@@ -16,7 +17,7 @@ import static java.util.UUID.randomUUID;
 
 public interface CardholderTestData {
 
-    default Cardholder createCardholder(){
+    default Cardholder createCardholder() {
         return createCardholder(aBillingAddress().build());
     }
 
@@ -29,7 +30,7 @@ public interface CardholderTestData {
         cardholder.setFirstName("Joe");
         cardholder.setLastName("Doe");
         cardholder.setBirthDate(LocalDate.now());
-        cardholder.setEmail("joe.doe@test.com");
+        cardholder.setEmail("joe.doe@test" + new Random().nextInt() + ".com");
         cardholder.setPhone("+48700800900");
 
         final var address = new Address();

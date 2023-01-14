@@ -1,26 +1,26 @@
 package io.github.piotrkozuch.issuing.cardholder;
 
 import io.github.piotrkozuch.issuing.cardholder.exception.CardholderEmailNotUniqueException;
+import io.github.piotrkozuch.issuing.cardholder.repository.CardholderRepository;
 import io.github.piotrkozuch.issuing.model.Address;
 import io.github.piotrkozuch.issuing.model.Cardholder;
 import io.github.piotrkozuch.issuing.types.BillingAddress;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
-import java.util.function.Supplier;
 
+import static io.github.piotrkozuch.issuing.cardholder.exception.CardholderExceptions.cardholderNotFoundException;
 import static io.github.piotrkozuch.issuing.model.CardholderState.PENDING;
-import static java.lang.String.format;
 import static java.time.Instant.now;
 import static java.util.UUID.randomUUID;
 
 @Service
 public class CardholderManager implements CardholderService {
 
-    private final CardholderRepository repository;
+    private CardholderRepository repository;
 
     @Autowired
     public CardholderManager(CardholderRepository repository) {
@@ -29,13 +29,9 @@ public class CardholderManager implements CardholderService {
 
     @Override
     public Cardholder activateCardholder(UUID id) {
-        final var cardholder = repository.findById(id).orElseThrow(entityNotFoundException(id));
+        final var cardholder = repository.findById(id).orElseThrow(cardholderNotFoundException(id));
 
         return repository.save(cardholder.activate());
-    }
-
-    private Supplier<EntityNotFoundException> entityNotFoundException(UUID id) {
-        return () -> new EntityNotFoundException(format("Unable to find cardholder with id %s", id));
     }
 
     @Override
@@ -63,6 +59,21 @@ public class CardholderManager implements CardholderService {
         cardholder.setAddress(addressFrom(billingAddress));
 
         return repository.save(cardholder);
+    }
+
+    @Override
+    public Cardholder getCardholder(UUID id) {
+        return repository.findById(id).orElseThrow(cardholderNotFoundException(id));
+    }
+
+    @Override
+    public List<Cardholder> getAllCardholders() {
+        return repository.findAll();
+    }
+
+    @Override
+    public void deleteCardholder(UUID id) {
+        repository.delete(id);
     }
 
     private Address addressFrom(BillingAddress billingAddress) {

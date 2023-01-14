@@ -18,3 +18,4 @@ CREATE TABLE cardholders (
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS cardholders_email_index on cardholders(email);
+CREATE INDEX IF NOT EXISTS cardholders_created_date_index on cardholders(created_date);

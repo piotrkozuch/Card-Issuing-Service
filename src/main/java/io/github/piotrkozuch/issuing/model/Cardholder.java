@@ -15,6 +15,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import static io.github.piotrkozuch.issuing.model.CardholderState.ACTIVE;
+import static io.github.piotrkozuch.issuing.model.CardholderState.DELETED;
 import static io.github.piotrkozuch.issuing.model.CardholderState.PENDING;
 import static io.github.piotrkozuch.issuing.utils.Checks.checkRequired;
 
@@ -149,5 +150,13 @@ public class Cardholder {
 
     public boolean hasState(CardholderState state) {
         return getState() == checkRequired("state", state);
+    }
+
+    public Cardholder delete() {
+        if (hasState(ACTIVE) || hasState(PENDING)) {
+            setState(DELETED);
+        }
+
+        return this;
     }
 }

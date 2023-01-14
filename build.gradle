@@ -21,7 +21,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.flywaydb:flyway-core'
     implementation 'com.neovisionaries:nv-i18n:1.29'
-    implementation 'org.apache.httpcomponents:httpclient'
+    implementation 'org.apache.httpcomponents.client5:httpclient5'
+    implementation 'com.github.ben-manes.caffeine:caffeine:3.1.2'
 
     runtimeOnly 'org.postgresql:postgresql'
 

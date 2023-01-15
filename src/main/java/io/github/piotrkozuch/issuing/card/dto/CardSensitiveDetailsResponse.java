@@ -9,44 +9,44 @@ import static io.github.piotrkozuch.issuing.utils.Checks.checkRequired;
 public class CardSensitiveDetailsResponse {
 
     public final UUID id;
+    public final UUID cardId;
     public final String pan;
     public final String cvv;
     public final int expiryMonth;
     public final int expiryYear;
     public final String nameOnCard;
-    public final String state;
     public final Instant createdDate;
     public final Instant updatedDate;
 
     public CardSensitiveDetailsResponse(UUID id,
+                                        UUID cardId,
                                         String pan,
                                         String cvv,
                                         Integer expiryMonth,
                                         Integer expiryYear,
                                         String nameOnCard,
-                                        String state,
                                         Instant createdDate,
                                         Instant updatedDate) {
         this(cardSensitiveDetailsResponse()
             .id(id)
+            .cardId(cardId)
             .pan(pan)
             .cvv(cvv)
             .expiryMonth(expiryMonth)
             .expiryYear(expiryYear)
             .nameOnCard(nameOnCard)
-            .state(state)
             .createdDate(createdDate)
             .updatedDate(updatedDate));
     }
 
     public CardSensitiveDetailsResponse(Builder builder) {
         this.id = checkRequired("id", builder.id);
+        this.cardId = checkRequired("cardId", builder.cardId);
         this.pan = checkRequired("pan", builder.pan);
         this.cvv = checkRequired("cvv", builder.cvv);
         this.expiryMonth = checkRequired("expiryMonth", builder.expiryMonth);
         this.expiryYear = checkRequired("expiryYear", builder.expiryYear);
         this.nameOnCard = checkRequired("nameOnCard", builder.nameOnCard);
-        this.state = checkRequired("state", builder.state);
         this.createdDate = checkRequired("createdDate", builder.createdDate);
         this.updatedDate = checkRequired("updatedDate", builder.updatedDate);
     }
@@ -54,12 +54,12 @@ public class CardSensitiveDetailsResponse {
     public static class Builder {
 
         private UUID id;
+        private UUID cardId;
         private String cvv;
         private String pan;
         private int expiryMonth;
         private int expiryYear;
         private String nameOnCard;
-        private String state;
         private Instant createdDate;
         private Instant updatedDate;
 
@@ -77,6 +77,11 @@ public class CardSensitiveDetailsResponse {
 
         public Builder id(UUID id) {
             this.id = id;
+            return this;
+        }
+
+        public Builder cardId(UUID cardId) {
+            this.cardId = cardId;
             return this;
         }
 
@@ -102,11 +107,6 @@ public class CardSensitiveDetailsResponse {
 
         public Builder nameOnCard(String nameOnCard) {
             this.nameOnCard = nameOnCard;
-            return this;
-        }
-
-        public Builder state(String state) {
-            this.state = state;
             return this;
         }
 

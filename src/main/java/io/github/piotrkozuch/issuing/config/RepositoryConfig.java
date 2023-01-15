@@ -1,5 +1,8 @@
 package io.github.piotrkozuch.issuing.config;
 
+import io.github.piotrkozuch.issuing.card.repository.CardJpaRepository;
+import io.github.piotrkozuch.issuing.card.repository.CardRepository;
+import io.github.piotrkozuch.issuing.card.repository.CardSensitiveDetailsJpaRepository;
 import io.github.piotrkozuch.issuing.cardholder.repository.CachingCardholderRepository;
 import io.github.piotrkozuch.issuing.cardholder.repository.CardholderCache;
 import io.github.piotrkozuch.issuing.cardholder.repository.CardholderJpaRepository;
@@ -19,5 +22,11 @@ public class RepositoryConfig {
     @Bean
     public CardholderCache cardholderCache(CardholderJpaRepository cardholderJpaRepository) {
         return new CardholderCache(cardholderJpaRepository);
+    }
+
+    @Bean
+    public CardRepository cardRepository(CardJpaRepository cardJpaRepository,
+                                         CardSensitiveDetailsJpaRepository cardSensitiveDetailsJpaRepository) {
+        return new CardRepository(cardJpaRepository, cardSensitiveDetailsJpaRepository);
     }
 }

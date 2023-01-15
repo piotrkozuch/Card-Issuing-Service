@@ -9,6 +9,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 import java.time.Instant;
 import java.util.Objects;
@@ -53,6 +54,9 @@ public class Card {
 
     @Column(nullable = false)
     private Instant updatedDate;
+
+    @Transient
+    private CardSensitiveDetails cardSensitiveDetails;
 
     public UUID getId() {
         return id;
@@ -134,12 +138,20 @@ public class Card {
         this.currency = currency;
     }
 
+    public CardSensitiveDetails getCardSensitiveDetails() {
+        return cardSensitiveDetails;
+    }
+
+    public void setCardSensitiveDetails(CardSensitiveDetails cardSensitiveDetails) {
+        this.cardSensitiveDetails = cardSensitiveDetails;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
-        return Objects.equals(id, card.id) && Objects.equals(cardholderId, card.cardholderId) && state == card.state && Objects.equals(maskedPan, card.maskedPan) && Objects.equals(token, card.token) && brand == card.brand && type == card.type && Objects.equals(currency, card.currency) && Objects.equals(createdDate, card.createdDate) && Objects.equals(updatedDate, card.updatedDate);
+        return Objects.equals(id, card.id) && Objects.equals(cardholderId, card.cardholderId) && state == card.state && Objects.equals(maskedPan, card.maskedPan) && Objects.equals(token, card.token) && brand == card.brand && type == card.type && currency == card.currency && Objects.equals(createdDate, card.createdDate) && Objects.equals(updatedDate, card.updatedDate);
     }
 
     @Override

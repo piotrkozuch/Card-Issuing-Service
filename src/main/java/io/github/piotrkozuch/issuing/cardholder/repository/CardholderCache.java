@@ -9,7 +9,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.UUID;
 
-import static io.github.piotrkozuch.issuing.cardholder.exception.CardholderExceptions.cardholderNotFoundException;
+import static io.github.piotrkozuch.issuing.exceptions.ExceptionUtils.entityNotFoundException;
 import static io.github.piotrkozuch.issuing.cardholder.model.CardholderState.DELETED;
 import static io.github.piotrkozuch.issuing.utils.Checks.checkRequired;
 
@@ -28,7 +28,7 @@ public class CardholderCache {
 
     public Optional<Cardholder> findById(UUID cardholderId) {
         final var cardholder = cardholderCache.get(cardholderId, id -> repository.findByIdAndStateNot(id, DELETED).
-            orElseThrow(cardholderNotFoundException(id)));
+            orElseThrow(entityNotFoundException(id)));
 
         return Optional.of(cardholder);
     }

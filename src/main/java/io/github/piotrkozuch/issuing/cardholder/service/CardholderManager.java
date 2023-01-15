@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-import static io.github.piotrkozuch.issuing.cardholder.exception.CardholderExceptions.cardholderNotFoundException;
+import static io.github.piotrkozuch.issuing.exceptions.ExceptionUtils.entityNotFoundException;
 import static io.github.piotrkozuch.issuing.utils.Checks.checkRequired;
 
 @Service
@@ -54,7 +54,7 @@ public class CardholderManager implements CardholderService {
 
     @Override
     public Cardholder getCardholder(UUID id) {
-        return repository.findById(id).orElseThrow(cardholderNotFoundException(id));
+        return repository.findById(id).orElseThrow(entityNotFoundException(id));
     }
 
     @Override

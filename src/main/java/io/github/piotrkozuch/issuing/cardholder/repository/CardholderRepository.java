@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static io.github.piotrkozuch.issuing.cardholder.exception.CardholderExceptions.cardholderNotFoundException;
+import static io.github.piotrkozuch.issuing.exceptions.ExceptionUtils.entityNotFoundException;
 
 public interface CardholderRepository {
 
     default Cardholder get(UUID id) {
-        return findById(id).orElseThrow(cardholderNotFoundException(id));
+        return findById(id).orElseThrow(entityNotFoundException(id));
     }
 
     Optional<Cardholder> findByEmail(String email);

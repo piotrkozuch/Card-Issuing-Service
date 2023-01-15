@@ -6,7 +6,6 @@ CREATE TABLE cards_sensitive_details (
     expiry_month     INTEGER         NOT NULL,
     expiry_year      INTEGER         NOT NULL,
     name_on_card     VARCHAR(100)    NOT NULL,
-    state            VARCHAR(40)     NOT NULL,
     created_date     TIMESTAMP       NOT NULL,
     updated_date     TIMESTAMP       NOT NULL,
 

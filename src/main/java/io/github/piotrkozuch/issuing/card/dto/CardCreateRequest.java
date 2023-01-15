@@ -2,7 +2,6 @@ package io.github.piotrkozuch.issuing.card.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import io.github.piotrkozuch.issuing.cardholder.dto.CardholderCreateRequest;
 import io.github.piotrkozuch.issuing.common.types.CardBrand;
 import io.github.piotrkozuch.issuing.common.types.CardType;
 import io.github.piotrkozuch.issuing.common.types.Currency;
@@ -11,7 +10,7 @@ import java.util.UUID;
 
 import static io.github.piotrkozuch.issuing.utils.Checks.checkRequired;
 
-@JsonDeserialize(builder = CardholderCreateRequest.Builder.class)
+@JsonDeserialize(builder = CardCreateRequest.Builder.class)
 public class CardCreateRequest {
 
     public final UUID cardholderId;

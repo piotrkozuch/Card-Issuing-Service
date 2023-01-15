@@ -168,4 +168,12 @@ public class Cardholder {
 
         return this;
     }
+
+    public String getLegalName() {
+        return (firstName + " " + lastName).toUpperCase();
+    }
+
+    public boolean isActive() {
+        return state == ACTIVE;
+    }
 }

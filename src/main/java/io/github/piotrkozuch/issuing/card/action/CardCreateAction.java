@@ -1,5 +1,6 @@
 package io.github.piotrkozuch.issuing.card.action;
 
+import com.neovisionaries.i18n.CurrencyCode;
 import io.github.piotrkozuch.issuing.action.Action;
 import io.github.piotrkozuch.issuing.card.action.exception.CardBrandNotSupportedException;
 import io.github.piotrkozuch.issuing.card.action.exception.CardCurrencyNotSupportedException;
@@ -13,7 +14,6 @@ import io.github.piotrkozuch.issuing.cardholder.model.Cardholder;
 import io.github.piotrkozuch.issuing.cardholder.repository.CardholderRepository;
 import io.github.piotrkozuch.issuing.common.types.CardBrand;
 import io.github.piotrkozuch.issuing.common.types.CardType;
-import io.github.piotrkozuch.issuing.common.types.Currency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +23,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+import static com.neovisionaries.i18n.CurrencyCode.EUR;
+import static com.neovisionaries.i18n.CurrencyCode.PLN;
 import static io.github.piotrkozuch.issuing.card.model.CardState.INACTIVE;
 import static io.github.piotrkozuch.issuing.card.service.CardSensitiveDetailsGenerator.maskedPan;
 import static io.github.piotrkozuch.issuing.common.types.CardBrand.MAESTRO;
@@ -30,8 +32,6 @@ import static io.github.piotrkozuch.issuing.common.types.CardBrand.MASTERCARD;
 import static io.github.piotrkozuch.issuing.common.types.CardBrand.VISA;
 import static io.github.piotrkozuch.issuing.common.types.CardType.CREDIT;
 import static io.github.piotrkozuch.issuing.common.types.CardType.DEBIT;
-import static io.github.piotrkozuch.issuing.common.types.Currency.EUR;
-import static io.github.piotrkozuch.issuing.common.types.Currency.PLN;
 import static io.github.piotrkozuch.issuing.utils.Checks.checkRequired;
 import static java.time.Instant.now;
 import static java.util.UUID.randomUUID;
@@ -42,11 +42,11 @@ public class CardCreateAction implements Action<CardCreateAction.Params, Card> {
     public static class Params {
 
         public final UUID cardholderId;
-        public final Currency currency;
+        public final CurrencyCode currency;
         public final CardBrand cardBrand;
         public final CardType cardType;
 
-        public Params(UUID cardholderId, Currency currency, CardBrand cardBrand, CardType cardType) {
+        public Params(UUID cardholderId, CurrencyCode currency, CardBrand cardBrand, CardType cardType) {
             this.cardholderId = checkRequired("cardholderId", cardholderId);
             this.currency = checkRequired("currency", currency);
             this.cardBrand = checkRequired("cardBrand", cardBrand);
@@ -69,7 +69,7 @@ public class CardCreateAction implements Action<CardCreateAction.Params, Card> {
 
     private static final Set<CardBrand> SUPPORTED_CARD_BRANDS = Set.of(VISA, MASTERCARD, MAESTRO);
     private static final Set<CardType> SUPPORTED_CARD_TYPES = Set.of(DEBIT, CREDIT);
-    private static final Set<Currency> SUPPORTED_CURRENCIES = Set.of(PLN, EUR);
+    private static final Set<CurrencyCode> SUPPORTED_CURRENCIES = Set.of(PLN, EUR);
 
     private final CardRepository cardRepository;
     private final CardholderRepository cardholderRepository;
@@ -125,7 +125,7 @@ public class CardCreateAction implements Action<CardCreateAction.Params, Card> {
         return Optional.of(savedCard);
     }
 
-    private Currency checkCardCurrency(Currency currency) {
+    private CurrencyCode checkCardCurrency(CurrencyCode currency) {
         if (SUPPORTED_CURRENCIES.contains(currency)) {
             return currency;
         }

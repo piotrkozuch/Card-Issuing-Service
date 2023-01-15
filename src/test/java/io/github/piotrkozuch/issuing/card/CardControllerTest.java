@@ -85,6 +85,66 @@ class CardControllerTest implements CardholderTestData, CardTestData {
         assertThat(cardSensitiveDetails.getNameOnCard()).isEqualTo(cardholder.getLegalName());
     }
 
+    @Test
+    void should_return_card_by_id() {
+        // given
+        var cardholder = cardholderJpaRepository.save(createCardholder().activate());
+        var card = createCard();
+        card.setCardholderId(cardholder.getId());
+        cardJpaRepository.save(card);
+
+        var url = urlFor("/api/v0.1/cards/" + card.getId());
+
+        // when
+        var response = restTemplate.getForEntity(url, CardResponse.class);
+
+        // then
+        var cardResponse = response.getBody();
+
+        assertThat(cardResponse.cardSensitiveDetails).isEmpty();
+        assertThat(cardResponse.cardholderId).isEqualTo(card.getCardholderId());
+        assertThat(cardResponse.currency).isEqualTo(card.getCurrency());
+        assertThat(cardResponse.brand).isEqualTo(card.getBrand());
+        assertThat(cardResponse.type).isEqualTo(card.getType());
+    }
+
+    @Test
+    void should_return_card_with_details() {
+        // given
+        var cardholder = cardholderJpaRepository.save(createCardholder().activate());
+        var card = createCard();
+        card.setCardholderId(cardholder.getId());
+
+        var cardDetails = createCardSensitiveDetails();
+        cardDetails.setNameOnCard(cardholder.getLegalName());
+        cardDetails.setCardId(card.getId());
+        card.setToken(cardDetails.getId());
+
+        cardJpaRepository.save(card);
+        cardSensitiveDetailsJpaRepository.save(cardDetails);
+
+        var url = urlFor("/api/v0.1/cards/" + card.getId() + "/details");
+
+        // when
+        var response = restTemplate.getForEntity(url, CardResponse.class);
+
+        // then
+        var cardResponse = response.getBody();
+
+        var details = cardResponse.cardSensitiveDetails.get();
+        assertThat(details.cardId).isEqualTo(card.getId());
+        assertThat(details.cvv).isEqualTo(cardDetails.getCvv());
+        assertThat(details.pan).isEqualTo(cardDetails.getPan());
+        assertThat(details.expiryMonth).isEqualTo(cardDetails.getExpiryMonth());
+        assertThat(details.expiryYear).isEqualTo(cardDetails.getExpiryYear());
+        assertThat(details.nameOnCard).isEqualTo(cardholder.getLegalName());
+
+        assertThat(cardResponse.cardholderId).isEqualTo(card.getCardholderId());
+        assertThat(cardResponse.currency).isEqualTo(card.getCurrency());
+        assertThat(cardResponse.brand).isEqualTo(card.getBrand());
+        assertThat(cardResponse.type).isEqualTo(card.getType());
+    }
+
     private String urlFor(String path) {
         return "http://localhost:" + port + path;
     }

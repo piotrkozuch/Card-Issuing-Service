@@ -1,8 +1,8 @@
 package io.github.piotrkozuch.issuing.card.dto;
 
+import com.neovisionaries.i18n.CurrencyCode;
 import io.github.piotrkozuch.issuing.common.types.CardBrand;
 import io.github.piotrkozuch.issuing.common.types.CardType;
-import io.github.piotrkozuch.issuing.common.types.Currency;
 
 import java.time.Instant;
 import java.util.Optional;
@@ -20,7 +20,7 @@ public class CardResponse {
     public final UUID token;
     public final CardBrand brand;
     public final CardType type;
-    public final Currency currency;
+    public final CurrencyCode currency;
     public final Instant createdDate;
     public final Instant updatedDate;
     public final Optional<CardSensitiveDetailsResponse> cardSensitiveDetails;
@@ -32,7 +32,7 @@ public class CardResponse {
                         UUID token,
                         CardBrand brand,
                         CardType type,
-                        Currency currency,
+                        CurrencyCode currency,
                         Instant createdDate,
                         Instant updatedDate,
                         CardSensitiveDetailsResponse cardSensitiveDetails) {
@@ -74,7 +74,7 @@ public class CardResponse {
         private UUID token;
         private CardBrand brand;
         private CardType type;
-        private Currency currency;
+        private CurrencyCode currency;
         private Instant createdDate;
         private Instant updatedDate;
         private CardSensitiveDetailsResponse cardSensitiveDetails;
@@ -131,7 +131,7 @@ public class CardResponse {
             return this;
         }
 
-        public Builder currency(Currency currency) {
+        public Builder currency(CurrencyCode currency) {
             this.currency = currency;
             return this;
         }

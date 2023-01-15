@@ -8,6 +8,7 @@ import io.github.piotrkozuch.issuing.card.model.CardSensitiveDetails;
 import io.github.piotrkozuch.issuing.card.service.CardManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,14 +44,14 @@ public class CardController {
 
     @ResponseBody
     @GetMapping("/{id}")
-    public CardResponse getCard(UUID id) {
+    public CardResponse getCard(@PathVariable UUID id) {
         final var card = cardManager.get(id, false);
         return createCardResponse(card);
     }
 
     @ResponseBody
     @GetMapping("/{id}/details")
-    public CardResponse getCardWithSensitiveDetails(UUID id) {
+    public CardResponse getCardWithSensitiveDetails(@PathVariable UUID id) {
         final var card = cardManager.get(id, true);
         return createCardResponse(card);
     }

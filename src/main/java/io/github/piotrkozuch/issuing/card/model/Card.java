@@ -1,8 +1,8 @@
 package io.github.piotrkozuch.issuing.card.model;
 
+import com.neovisionaries.i18n.CurrencyCode;
 import io.github.piotrkozuch.issuing.common.types.CardBrand;
 import io.github.piotrkozuch.issuing.common.types.CardType;
-import io.github.piotrkozuch.issuing.common.types.Currency;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -47,7 +47,7 @@ public class Card {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Currency currency;
+    private CurrencyCode currency;
 
     @Column(nullable = false)
     private Instant createdDate;
@@ -130,11 +130,11 @@ public class Card {
         this.updatedDate = checkRequired("updatedDate", updatedDate);
     }
 
-    public Currency getCurrency() {
+    public CurrencyCode getCurrency() {
         return currency;
     }
 
-    public void setCurrency(Currency currency) {
+    public void setCurrency(CurrencyCode currency) {
         this.currency = currency;
     }
 

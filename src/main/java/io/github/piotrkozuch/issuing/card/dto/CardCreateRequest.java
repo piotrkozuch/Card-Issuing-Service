@@ -2,9 +2,9 @@ package io.github.piotrkozuch.issuing.card.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import com.neovisionaries.i18n.CurrencyCode;
 import io.github.piotrkozuch.issuing.common.types.CardBrand;
 import io.github.piotrkozuch.issuing.common.types.CardType;
-import io.github.piotrkozuch.issuing.common.types.Currency;
 
 import java.util.UUID;
 
@@ -14,7 +14,7 @@ import static io.github.piotrkozuch.issuing.utils.Checks.checkRequired;
 public class CardCreateRequest {
 
     public final UUID cardholderId;
-    public final Currency currency;
+    public final CurrencyCode currency;
     public final CardBrand cardBrand;
     public final CardType cardType;
 
@@ -29,7 +29,7 @@ public class CardCreateRequest {
     public static class Builder {
 
         private UUID cardholderId;
-        private Currency currency;
+        private CurrencyCode currency;
         private CardBrand cardBrand;
         private CardType cardType;
 
@@ -50,7 +50,7 @@ public class CardCreateRequest {
             return this;
         }
 
-        public Builder currency(Currency currency) {
+        public Builder currency(CurrencyCode currency) {
             this.currency = currency;
             return this;
         }

@@ -1,11 +1,14 @@
 package io.github.piotrkozuch.issuing.card;
 
+import com.neovisionaries.i18n.CurrencyCode;
 import io.github.piotrkozuch.issuing.card.dto.CardCreateRequest;
 import io.github.piotrkozuch.issuing.card.dto.CardResponse;
 import io.github.piotrkozuch.issuing.card.dto.CardSensitiveDetailsResponse;
+import io.github.piotrkozuch.issuing.card.model.Card;
+import io.github.piotrkozuch.issuing.card.model.CardSensitiveDetails;
+import io.github.piotrkozuch.issuing.card.model.CardState;
 import io.github.piotrkozuch.issuing.common.types.CardBrand;
 import io.github.piotrkozuch.issuing.common.types.CardType;
-import io.github.piotrkozuch.issuing.common.types.Currency;
 
 import java.time.LocalDate;
 
@@ -17,11 +20,38 @@ import static java.util.UUID.randomUUID;
 
 public interface CardTestData {
 
+    default Card createCard() {
+        final var card = new Card();
+        card.setId(randomUUID());
+        card.setCardholderId(randomUUID());
+        card.setMaskedPan("424242******4242");
+        card.setToken(randomUUID());
+        card.setState(CardState.ACTIVE);
+        card.setType(CardType.DEBIT);
+        card.setBrand(CardBrand.VISA);
+        card.setCreatedDate(now());
+        card.setUpdatedDate(now());
+        card.setCurrency(CurrencyCode.EUR);
+        return card;
+    }
+
+    default CardSensitiveDetails createCardSensitiveDetails(){
+        final var cardDetails = new CardSensitiveDetails();
+        cardDetails.setId(randomUUID());
+        cardDetails.setPan("4242424242424242");
+        cardDetails.setCardId(randomUUID());
+        cardDetails.setCvv("123");
+        cardDetails.setCreatedDate(now());
+        cardDetails.setUpdatedDate(now());
+        cardDetails.setNameOnCard("Joe Doe");
+        return cardDetails;
+    }
+
     default CardCreateRequest.Builder aCardCreateRequest() {
         return cardCreateRequest()
             .cardBrand(CardBrand.VISA)
             .cardType(CardType.DEBIT)
-            .currency(Currency.EUR)
+            .currency(CurrencyCode.EUR)
             .cardholderId(randomUUID());
     }
 
@@ -34,7 +64,7 @@ public interface CardTestData {
             .maskedPan("424242******4242")
             .brand(CardBrand.VISA)
             .type(CardType.PREPAID)
-            .currency(Currency.PLN);
+            .currency(CurrencyCode.PLN);
     }
 
     default CardSensitiveDetailsResponse.Builder aCardSensitiveDetailsResponse() {

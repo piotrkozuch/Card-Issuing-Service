@@ -1,11 +1,11 @@
 package io.github.piotrkozuch.issuing.card.service;
 
+import com.neovisionaries.i18n.CurrencyCode;
 import io.github.piotrkozuch.issuing.card.action.CardCreateAction;
 import io.github.piotrkozuch.issuing.card.model.Card;
 import io.github.piotrkozuch.issuing.card.repository.CardRepository;
 import io.github.piotrkozuch.issuing.common.types.CardBrand;
 import io.github.piotrkozuch.issuing.common.types.CardType;
-import io.github.piotrkozuch.issuing.common.types.Currency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +28,7 @@ public class CardManager implements CardService {
     }
 
     @Override
-    public Card issueNewCard(UUID cardholderId, CardBrand cardBrand, CardType cardType, Currency currency) {
+    public Card issueNewCard(UUID cardholderId, CardBrand cardBrand, CardType cardType, CurrencyCode currency) {
         return cardCreateAction.execute(new CardCreateAction.Params(
             cardholderId, currency, cardBrand, cardType
         )).get();
@@ -39,7 +39,7 @@ public class CardManager implements CardService {
         return cardRepository.getCard(cardId, includeSensitiveDetails);
     }
 
-    public List<Card> findAll(){
+    public List<Card> findAll() {
         return cardRepository.findAll();
     }
 }

@@ -75,7 +75,7 @@ class CardholderControllerTest implements CardholderTestData {
     void should_activate_cardholder() {
         // given
         var cardholder = cardholderJpaRepository.save(createCardholder());
-        var url = urlFor("/api/v0.1/cardholders/activate/" + cardholder.getId());
+        var url = urlFor("/api/v0.1/cardholders/" + cardholder.getId() + "/activate");
 
         // when
         var activeCardholder = restTemplate.patchForObject(url, null, CardholderResponse.class);

@@ -49,7 +49,7 @@ public class CardholderController {
         return createCardholderResponse(cardholder);
     }
 
-    @PatchMapping("/activate/{id}")
+    @PatchMapping("{id}/activate")
     @ResponseBody
     public CardholderResponse activateCardholder(@PathVariable UUID id) {
         final var cardholder = cardholderService.activateCardholder(id);

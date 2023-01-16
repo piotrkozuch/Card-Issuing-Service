@@ -35,8 +35,8 @@ public class CardManager implements CardService {
     }
 
     @Override
-    public Card get(UUID cardId, boolean includeSensitiveDetails) {
-        return cardRepository.getCard(cardId, includeSensitiveDetails);
+    public Card get(UUID cardId) {
+        return cardRepository.getCard(cardId);
     }
 
     public List<Card> findAll() {

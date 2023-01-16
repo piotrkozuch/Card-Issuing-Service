@@ -25,7 +25,6 @@ public interface CardTestData {
         card.setId(randomUUID());
         card.setCardholderId(randomUUID());
         card.setMaskedPan("424242******4242");
-        card.setToken(randomUUID());
         card.setState(CardState.ACTIVE);
         card.setType(CardType.DEBIT);
         card.setBrand(CardBrand.VISA);

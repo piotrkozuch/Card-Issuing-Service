@@ -11,5 +11,5 @@ public interface CardService {
 
     Card issueNewCard(UUID cardholderId, CardBrand cardBrand, CardType cardType, CurrencyCode currency);
 
-    Card get(UUID cardId, boolean includeSensitiveDetails);
+    Card get(UUID cardId);
 }

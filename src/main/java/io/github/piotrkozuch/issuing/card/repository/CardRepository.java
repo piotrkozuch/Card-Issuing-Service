@@ -24,21 +24,13 @@ public class CardRepository {
         return cardJpaRepository.save(card);
     }
 
-    public CardSensitiveDetails saveCardSensitiveDetails(CardSensitiveDetails cardSensitiveDetails) {
+    public CardSensitiveDetails save(CardSensitiveDetails cardSensitiveDetails) {
         return cardSensitiveDetailsJpaRepository.save(cardSensitiveDetails);
     }
 
-    public Card getCard(UUID cardId, boolean includeSensitiveDetails) {
-        final var card = cardJpaRepository.findById(cardId)
+    public Card getCard(UUID cardId) {
+        return cardJpaRepository.findById(cardId)
             .orElseThrow(entityNotFoundException(cardId));
-
-        if (includeSensitiveDetails) {
-            final var sensitiveDetails = cardSensitiveDetailsJpaRepository.findById(card.getToken())
-                .orElseThrow(entityNotFoundException(cardId));
-            card.setCardSensitiveDetails(sensitiveDetails);
-        }
-
-        return card;
     }
 
     public List<Card> findAll() {

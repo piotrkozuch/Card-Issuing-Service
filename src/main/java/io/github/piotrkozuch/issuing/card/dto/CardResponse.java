@@ -17,7 +17,6 @@ public class CardResponse {
     public final UUID cardholderId;
     public final String state;
     public final String maskedPan;
-    public final UUID token;
     public final CardBrand brand;
     public final CardType type;
     public final CurrencyCode currency;
@@ -29,7 +28,6 @@ public class CardResponse {
                         UUID cardholderId,
                         String state,
                         String maskedPan,
-                        UUID token,
                         CardBrand brand,
                         CardType type,
                         CurrencyCode currency,
@@ -41,7 +39,6 @@ public class CardResponse {
             .cardholderId(cardholderId)
             .state(state)
             .maskedPan(maskedPan)
-            .token(token)
             .brand(brand)
             .type(type)
             .currency(currency)
@@ -56,7 +53,6 @@ public class CardResponse {
         this.cardholderId = checkRequired("cardholderId", builder.cardholderId);
         this.state = checkRequired("state", builder.state);
         this.maskedPan = checkRequired("maskedPan", builder.maskedPan);
-        this.token = checkRequired("token", builder.token);
         this.brand = checkRequired("brand", builder.brand);
         this.type = checkRequired("type", builder.type);
         this.currency = checkRequired("currency", builder.currency);
@@ -71,7 +67,6 @@ public class CardResponse {
         private UUID cardholderId;
         private String state;
         private String maskedPan;
-        private UUID token;
         private CardBrand brand;
         private CardType type;
         private CurrencyCode currency;
@@ -113,11 +108,6 @@ public class CardResponse {
 
         public Builder maskedPan(String maskedPan) {
             this.maskedPan = maskedPan;
-            return this;
-        }
-
-        public Builder token(UUID token) {
-            this.token = token;
             return this;
         }
 

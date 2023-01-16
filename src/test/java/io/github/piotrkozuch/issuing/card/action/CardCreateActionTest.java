@@ -4,11 +4,13 @@ import io.github.piotrkozuch.issuing.card.CardTestData;
 import io.github.piotrkozuch.issuing.card.action.exception.CardBrandNotSupportedException;
 import io.github.piotrkozuch.issuing.card.action.exception.CardCurrencyNotSupportedException;
 import io.github.piotrkozuch.issuing.card.action.exception.CardTypeNotSupportedException;
+import io.github.piotrkozuch.issuing.card.model.Card;
 import io.github.piotrkozuch.issuing.card.repository.CardRepository;
 import io.github.piotrkozuch.issuing.card.service.CardSensitiveDetailsService;
 import io.github.piotrkozuch.issuing.cardholder.CardholderTestData;
 import io.github.piotrkozuch.issuing.cardholder.exception.CardholderInactiveException;
 import io.github.piotrkozuch.issuing.cardholder.repository.CardholderRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static com.neovisionaries.i18n.CurrencyCode.EUR;
@@ -32,6 +34,14 @@ class CardCreateActionTest implements CardTestData, CardholderTestData {
     private final CardSensitiveDetailsService cardSensitiveDetailsService = mock(CardSensitiveDetailsService.class);
 
     private final CardCreateAction action = new CardCreateAction(cardRepository, cardholderRepository, cardSensitiveDetailsService);
+
+    @BeforeEach
+    void setup() {
+        given(cardSensitiveDetailsService.generateExpiryMonth()).willReturn(10);
+        given(cardSensitiveDetailsService.generateExpiryYear()).willReturn(2026);
+        given(cardSensitiveDetailsService.generateCvv()).willReturn("123");
+        given(cardSensitiveDetailsService.generatePan(VISA)).willReturn("4242424242424242");
+    }
 
     @Test
     void should_throw_exception_if_cardholder_is_not_active() {
@@ -90,11 +100,7 @@ class CardCreateActionTest implements CardTestData, CardholderTestData {
         // given
         var cardholder = createCardholder().activate();
         given(cardholderRepository.get(cardholder.getId())).willReturn(cardholder);
-        given(cardSensitiveDetailsService.generateExpiryMonth()).willReturn(10);
-        given(cardSensitiveDetailsService.generateExpiryYear()).willReturn(2026);
-        given(cardSensitiveDetailsService.generateCvv()).willReturn("123");
-        given(cardSensitiveDetailsService.generatePan(VISA)).willReturn("4242424242424242");
-        given(cardRepository.save(any())).willAnswer(invocation -> invocation.getArgument(0));
+        given(cardRepository.save(any(Card.class))).willAnswer(invocation -> invocation.getArgument(0));
 
         // when
         var newCard = action.execute(new CardCreateAction

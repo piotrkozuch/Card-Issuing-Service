@@ -7,9 +7,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 import java.time.Instant;
 import java.util.Objects;
@@ -34,9 +36,6 @@ public class Card {
     @Column(nullable = false)
     private String maskedPan;
 
-    @Column(nullable = false, unique = true)
-    private UUID token;
-
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private CardBrand brand;
@@ -55,7 +54,8 @@ public class Card {
     @Column(nullable = false)
     private Instant updatedDate;
 
-    @Transient
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "token", referencedColumnName = "id")
     private CardSensitiveDetails cardSensitiveDetails;
 
     public UUID getId() {
@@ -88,14 +88,6 @@ public class Card {
 
     public void setMaskedPan(String maskedPan) {
         this.maskedPan = checkRequired("maskedPan", maskedPan);
-    }
-
-    public UUID getToken() {
-        return token;
-    }
-
-    public void setToken(UUID token) {
-        this.token = checkRequired("token", token);
     }
 
     public CardBrand getBrand() {
@@ -151,11 +143,11 @@ public class Card {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
-        return Objects.equals(id, card.id) && Objects.equals(cardholderId, card.cardholderId) && state == card.state && Objects.equals(maskedPan, card.maskedPan) && Objects.equals(token, card.token) && brand == card.brand && type == card.type && currency == card.currency && Objects.equals(createdDate, card.createdDate) && Objects.equals(updatedDate, card.updatedDate);
+        return Objects.equals(id, card.id) && Objects.equals(cardholderId, card.cardholderId) && state == card.state && Objects.equals(maskedPan, card.maskedPan) && brand == card.brand && type == card.type && currency == card.currency && Objects.equals(createdDate, card.createdDate) && Objects.equals(updatedDate, card.updatedDate) && Objects.equals(cardSensitiveDetails, card.cardSensitiveDetails);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, cardholderId, state, maskedPan, token, brand, type, currency, createdDate, updatedDate);
+        return Objects.hash(id, cardholderId, state, maskedPan, brand, type, currency, createdDate, updatedDate, cardSensitiveDetails);
     }
 }

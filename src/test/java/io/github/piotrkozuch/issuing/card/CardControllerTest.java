@@ -75,9 +75,8 @@ class CardControllerTest implements CardholderTestData, CardTestData {
         assertThat(newCard.getCurrency()).isEqualTo(request.currency);
         assertThat(newCard.getCardholderId()).isEqualTo(request.cardholderId);
         assertThat(newCard.getId()).isEqualTo(cardResponse.id);
-        assertThat(newCard.getToken()).isNotNull();
 
-        var cardSensitiveDetails = cardSensitiveDetailsJpaRepository.findById(newCard.getToken()).get();
+        var cardSensitiveDetails = newCard.getCardSensitiveDetails();
         assertThat(cardSensitiveDetails.getCvv()).isNotEmpty();
         assertThat(cardSensitiveDetails.getExpiryMonth()).isEqualTo(LocalDate.now().getMonthValue());
         assertThat(cardSensitiveDetails.getExpiryYear()).isEqualTo(LocalDate.now().getYear() + 3);
@@ -90,6 +89,9 @@ class CardControllerTest implements CardholderTestData, CardTestData {
         // given
         var cardholder = cardholderJpaRepository.save(createCardholder().activate());
         var card = createCard();
+        var details = createCardSensitiveDetails();
+        cardSensitiveDetailsJpaRepository.save(details);
+        card.setCardSensitiveDetails(details);
         card.setCardholderId(cardholder.getId());
         cardJpaRepository.save(card);
 
@@ -117,10 +119,10 @@ class CardControllerTest implements CardholderTestData, CardTestData {
 
         var cardDetails = createCardSensitiveDetails();
         cardDetails.setNameOnCard(cardholder.getLegalName());
-        card.setToken(cardDetails.getId());
-
-        cardJpaRepository.save(card);
         cardSensitiveDetailsJpaRepository.save(cardDetails);
+
+        card.setCardSensitiveDetails(cardDetails);
+        cardJpaRepository.save(card);
 
         var url = urlFor("/api/v0.1/cards/" + card.getId() + "/details");
 
@@ -130,12 +132,12 @@ class CardControllerTest implements CardholderTestData, CardTestData {
         // then
         var cardResponse = response.getBody();
 
-        var details = cardResponse.cardSensitiveDetails.get();
-        assertThat(details.cvv).isEqualTo(cardDetails.getCvv());
-        assertThat(details.pan).isEqualTo(cardDetails.getPan());
-        assertThat(details.expiryMonth).isEqualTo(cardDetails.getExpiryMonth());
-        assertThat(details.expiryYear).isEqualTo(cardDetails.getExpiryYear());
-        assertThat(details.nameOnCard).isEqualTo(cardholder.getLegalName());
+        var detailsResponse = cardResponse.cardSensitiveDetails.get();
+        assertThat(detailsResponse.cvv).isEqualTo(cardDetails.getCvv());
+        assertThat(detailsResponse.pan).isEqualTo(cardDetails.getPan());
+        assertThat(detailsResponse.expiryMonth).isEqualTo(cardDetails.getExpiryMonth());
+        assertThat(detailsResponse.expiryYear).isEqualTo(cardDetails.getExpiryYear());
+        assertThat(detailsResponse.nameOnCard).isEqualTo(cardholder.getLegalName());
 
         assertThat(cardResponse.cardholderId).isEqualTo(card.getCardholderId());
         assertThat(cardResponse.currency).isEqualTo(card.getCurrency());

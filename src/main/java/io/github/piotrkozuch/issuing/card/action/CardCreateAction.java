@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -91,37 +92,47 @@ public class CardCreateAction implements Action<CardCreateAction.Params, Card> {
 
         validateCardholder(cardholder);
 
+        final var createdDate = now();
+        final var expiryMonth = cardSensitiveDetailsGenerator.generateExpiryMonth();
+        final var expiryYear = cardSensitiveDetailsGenerator.generateExpiryYear();
+        final var cvv = cardSensitiveDetailsGenerator.generateCvv();
+        final var pan = cardSensitiveDetailsGenerator.generatePan(params.cardBrand);
+
+        final var newCardDetails = cardRepository.save(
+            createCardSensitiveDetaisl(cardholder, createdDate, expiryMonth, expiryYear, cvv, pan)
+        );
+
+        final var newCard = cardRepository.save(createCard(params, cardholder, createdDate, pan, newCardDetails));
+
+        return Optional.of(newCard);
+    }
+
+    private Card createCard(Params params, Cardholder cardholder, Instant createdDate, String pan, CardSensitiveDetails newCardDetails) {
         final var newCard = new Card();
         newCard.setCardholderId(cardholder.getId());
         newCard.setId(randomUUID());
-
-        final var createdDate = now();
         newCard.setCreatedDate(createdDate);
         newCard.setUpdatedDate(createdDate);
         newCard.setBrand(checkCardBrand(params.cardBrand));
         newCard.setType(checkCardType(params.cardType));
         newCard.setCurrency(checkCardCurrency(params.currency));
         newCard.setState(INACTIVE);
+        newCard.setMaskedPan(maskedPan(pan));
+        newCard.setCardSensitiveDetails(newCardDetails);
+        return newCard;
+    }
 
+    private CardSensitiveDetails createCardSensitiveDetaisl(Cardholder cardholder, Instant createdDate, int expiryMonth, int expiryYear, String cvv, String pan) {
         var newCardDetails = new CardSensitiveDetails();
         newCardDetails.setId(randomUUID());
         newCardDetails.setCreatedDate(createdDate);
         newCardDetails.setUpdatedDate(createdDate);
         newCardDetails.setNameOnCard(cardholder.getLegalName());
-        newCardDetails.setExpiryMonth(cardSensitiveDetailsGenerator.generateExpiryMonth());
-        newCardDetails.setExpiryYear(cardSensitiveDetailsGenerator.generateExpiryYear());
-        newCardDetails.setCvv(cardSensitiveDetailsGenerator.generateCvv());
-
-        final var pan = cardSensitiveDetailsGenerator.generatePan(params.cardBrand);
+        newCardDetails.setExpiryMonth(expiryMonth);
+        newCardDetails.setExpiryYear(expiryYear);
+        newCardDetails.setCvv(cvv);
         newCardDetails.setPan(pan);
-
-        newCard.setMaskedPan(maskedPan(pan));
-        newCard.setToken(newCardDetails.getId());
-
-        var savedCard = cardRepository.save(newCard);
-        cardRepository.saveCardSensitiveDetails(newCardDetails);
-
-        return Optional.of(savedCard);
+        return newCardDetails;
     }
 
     private CurrencyCode checkCardCurrency(CurrencyCode currency) {

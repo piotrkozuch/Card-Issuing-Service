@@ -39,35 +39,34 @@ public class CardController {
     @PostMapping
     public CardResponse issueNewCard(@RequestBody CardCreateRequest request) {
         final var card = cardManager.issueNewCard(request.cardholderId, request.cardBrand, request.cardType, request.currency);
-        return createCardResponse(card);
+        return createCardResponse(card, false);
     }
 
     @ResponseBody
     @GetMapping("/{id}")
     public CardResponse getCard(@PathVariable UUID id) {
-        final var card = cardManager.get(id, false);
-        return createCardResponse(card);
+        final var card = cardManager.get(id);
+        return createCardResponse(card, false);
     }
 
     @ResponseBody
     @GetMapping("/{id}/details")
     public CardResponse getCardWithSensitiveDetails(@PathVariable UUID id) {
-        final var card = cardManager.get(id, true);
-        return createCardResponse(card);
+        final var card = cardManager.get(id);
+        return createCardResponse(card, true);
     }
 
     @ResponseBody
     @GetMapping
     public List<CardResponse> getAllCards() {
         return cardManager.findAll().stream()
-            .map(this::createCardResponse)
+            .map(card -> createCardResponse(card, false))
             .collect(Collectors.toList());
     }
 
-    private CardResponse createCardResponse(Card card) {
+    private CardResponse createCardResponse(Card card, boolean includeDetails) {
         final var builder = cardResponse()
             .id(card.getId())
-            .token(card.getToken())
             .type(card.getType())
             .currency(card.getCurrency())
             .brand(card.getBrand())
@@ -78,6 +77,7 @@ public class CardController {
             .state(card.getState().name());
 
         Optional.ofNullable(card.getCardSensitiveDetails())
+            .filter(__ -> includeDetails)
             .map(this::createCardSensitiveDetailsResponse)
             .ifPresent(builder::cardSensitiveDetails);
 

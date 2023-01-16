@@ -43,14 +43,14 @@ class CardManagerTest implements CardTestData {
     void should_return_card_by_id() {
         // given
         var card = createCard();
-        given(cardRepository.getCard(card.getId(), false)).willReturn(card);
+        given(cardRepository.getCard(card.getId())).willReturn(card);
 
         // when
-        var loadedCard = cardManager.get(card.getId(), false);
+        var loadedCard = cardManager.get(card.getId());
 
         // then
         assertThat(loadedCard).isEqualTo(card);
-        verify(cardRepository).getCard(card.getId(), false);
+        verify(cardRepository).getCard(card.getId());
         verifyNoMoreInteractions(cardRepository);
         verifyNoInteractions(cardCreateAction);
     }

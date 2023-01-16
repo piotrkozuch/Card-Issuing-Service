@@ -24,14 +24,18 @@ public class CardSensitiveDetailsGenerator implements CardSensitiveDetailsServic
     @Override
     public String generatePan(CardBrand cardBrand) {
         final var pan = new char[16];
+
         if (cardBrand == VISA) {
             pan[0] = '4';
             return genRandomPan(1, pan);
-        } else if (cardBrand == MASTERCARD) {
+        }
+        if (cardBrand == MASTERCARD) {
             pan[0] = '5';
             pan[1] = '1';
             return genRandomPan(2, pan);
-        } else if (cardBrand == MAESTRO) {
+        }
+
+        if (cardBrand == MAESTRO) {
             pan[0] = '5';
             pan[1] = '5';
             return genRandomPan(2, pan);

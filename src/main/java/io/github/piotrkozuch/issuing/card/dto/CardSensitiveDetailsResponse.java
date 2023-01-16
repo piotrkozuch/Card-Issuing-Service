@@ -9,7 +9,6 @@ import static io.github.piotrkozuch.issuing.utils.Checks.checkRequired;
 public class CardSensitiveDetailsResponse {
 
     public final UUID id;
-    public final UUID cardId;
     public final String pan;
     public final String cvv;
     public final int expiryMonth;
@@ -19,7 +18,6 @@ public class CardSensitiveDetailsResponse {
     public final Instant updatedDate;
 
     public CardSensitiveDetailsResponse(UUID id,
-                                        UUID cardId,
                                         String pan,
                                         String cvv,
                                         Integer expiryMonth,
@@ -29,7 +27,6 @@ public class CardSensitiveDetailsResponse {
                                         Instant updatedDate) {
         this(cardSensitiveDetailsResponse()
             .id(id)
-            .cardId(cardId)
             .pan(pan)
             .cvv(cvv)
             .expiryMonth(expiryMonth)
@@ -41,7 +38,6 @@ public class CardSensitiveDetailsResponse {
 
     public CardSensitiveDetailsResponse(Builder builder) {
         this.id = checkRequired("id", builder.id);
-        this.cardId = checkRequired("cardId", builder.cardId);
         this.pan = checkRequired("pan", builder.pan);
         this.cvv = checkRequired("cvv", builder.cvv);
         this.expiryMonth = checkRequired("expiryMonth", builder.expiryMonth);
@@ -54,7 +50,6 @@ public class CardSensitiveDetailsResponse {
     public static class Builder {
 
         private UUID id;
-        private UUID cardId;
         private String cvv;
         private String pan;
         private int expiryMonth;
@@ -77,11 +72,6 @@ public class CardSensitiveDetailsResponse {
 
         public Builder id(UUID id) {
             this.id = id;
-            return this;
-        }
-
-        public Builder cardId(UUID cardId) {
-            this.cardId = cardId;
             return this;
         }
 

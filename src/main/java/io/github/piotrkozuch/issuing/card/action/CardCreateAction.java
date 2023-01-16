@@ -105,7 +105,6 @@ public class CardCreateAction implements Action<CardCreateAction.Params, Card> {
 
         var newCardDetails = new CardSensitiveDetails();
         newCardDetails.setId(randomUUID());
-        newCardDetails.setCardId(newCard.getId());
         newCardDetails.setCreatedDate(createdDate);
         newCardDetails.setUpdatedDate(createdDate);
         newCardDetails.setNameOnCard(cardholder.getLegalName());

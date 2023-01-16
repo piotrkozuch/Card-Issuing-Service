@@ -87,7 +87,6 @@ public class CardController {
     private CardSensitiveDetailsResponse createCardSensitiveDetailsResponse(CardSensitiveDetails cardSensitiveDetails) {
         return cardSensitiveDetailsResponse()
             .id(cardSensitiveDetails.getId())
-            .cardId(cardSensitiveDetails.getCardId())
             .nameOnCard(cardSensitiveDetails.getNameOnCard())
             .expiryYear(cardSensitiveDetails.getExpiryYear())
             .expiryMonth(cardSensitiveDetails.getExpiryMonth())

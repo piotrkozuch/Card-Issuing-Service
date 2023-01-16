@@ -117,7 +117,6 @@ class CardControllerTest implements CardholderTestData, CardTestData {
 
         var cardDetails = createCardSensitiveDetails();
         cardDetails.setNameOnCard(cardholder.getLegalName());
-        cardDetails.setCardId(card.getId());
         card.setToken(cardDetails.getId());
 
         cardJpaRepository.save(card);
@@ -132,7 +131,6 @@ class CardControllerTest implements CardholderTestData, CardTestData {
         var cardResponse = response.getBody();
 
         var details = cardResponse.cardSensitiveDetails.get();
-        assertThat(details.cardId).isEqualTo(card.getId());
         assertThat(details.cvv).isEqualTo(cardDetails.getCvv());
         assertThat(details.pan).isEqualTo(cardDetails.getPan());
         assertThat(details.expiryMonth).isEqualTo(cardDetails.getExpiryMonth());

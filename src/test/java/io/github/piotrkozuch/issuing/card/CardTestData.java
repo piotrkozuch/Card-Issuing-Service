@@ -39,7 +39,6 @@ public interface CardTestData {
         final var cardDetails = new CardSensitiveDetails();
         cardDetails.setId(randomUUID());
         cardDetails.setPan("4242424242424242");
-        cardDetails.setCardId(randomUUID());
         cardDetails.setCvv("123");
         cardDetails.setCreatedDate(now());
         cardDetails.setUpdatedDate(now());
@@ -70,7 +69,6 @@ public interface CardTestData {
     default CardSensitiveDetailsResponse.Builder aCardSensitiveDetailsResponse() {
         return cardSensitiveDetailsResponse()
             .id(randomUUID())
-            .cardId(randomUUID())
             .cvv("123")
             .pan("4242424242424242")
             .createdDate(now())

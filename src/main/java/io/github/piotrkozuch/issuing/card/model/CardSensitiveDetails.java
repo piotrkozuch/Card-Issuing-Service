@@ -18,9 +18,6 @@ public class CardSensitiveDetails {
     @Id
     private UUID id;
 
-    @Column(nullable = false, unique = true)
-    private UUID cardId;
-
     @Column(nullable = false)
     private String cvv;
 
@@ -48,14 +45,6 @@ public class CardSensitiveDetails {
 
     public void setId(UUID id) {
         this.id = checkRequired("id", id);
-    }
-
-    public UUID getCardId() {
-        return cardId;
-    }
-
-    public void setCardId(UUID cardId) {
-        this.cardId = checkRequired("cardId", cardId);
     }
 
     public String getCvv() {
@@ -119,11 +108,11 @@ public class CardSensitiveDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CardSensitiveDetails that = (CardSensitiveDetails) o;
-        return expiryMonth == that.expiryMonth && expiryYear == that.expiryYear && Objects.equals(id, that.id) && Objects.equals(cardId, that.cardId) && Objects.equals(cvv, that.cvv) && Objects.equals(pan, that.pan) && Objects.equals(nameOnCard, that.nameOnCard) && Objects.equals(createdDate, that.createdDate) && Objects.equals(updatedDate, that.updatedDate);
+        return expiryMonth == that.expiryMonth && expiryYear == that.expiryYear && Objects.equals(id, that.id) && Objects.equals(cvv, that.cvv) && Objects.equals(pan, that.pan) && Objects.equals(nameOnCard, that.nameOnCard) && Objects.equals(createdDate, that.createdDate) && Objects.equals(updatedDate, that.updatedDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, cardId, cvv, pan, expiryMonth, expiryYear, nameOnCard, createdDate, updatedDate);
+        return Objects.hash(id, cvv, pan, expiryMonth, expiryYear, nameOnCard, createdDate, updatedDate);
     }
 }

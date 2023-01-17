@@ -5,8 +5,11 @@ import io.github.piotrkozuch.issuing.card.repository.CardJpaRepository;
 import io.github.piotrkozuch.issuing.card.repository.CardSensitiveDetailsJpaRepository;
 import io.github.piotrkozuch.issuing.cardholder.CardholderTestData;
 import io.github.piotrkozuch.issuing.cardholder.repository.CardholderJpaRepository;
+import io.github.piotrkozuch.issuing.common.types.CardBrand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -44,12 +47,18 @@ class CardControllerTest implements CardholderTestData, CardTestData {
         cardSensitiveDetailsJpaRepository.deleteAll();
     }
 
-    @Test
-    void should_issue_new_card() {
+    @ParameterizedTest
+    @CsvSource({
+        "VISA",
+        "MASTERCARD",
+        "MAESTRO"
+    })
+    void should_issue_new_card(CardBrand cardBrand) {
         // given
         var url = urlFor("/api/v0.1/cards");
         var cardholder = cardholderJpaRepository.save(createCardholder().activate());
         var request = aCardCreateRequest()
+            .cardBrand(cardBrand)
             .cardholderId(cardholder.getId())
             .build();
 

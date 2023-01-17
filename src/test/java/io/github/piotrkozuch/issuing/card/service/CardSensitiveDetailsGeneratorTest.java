@@ -1,6 +1,7 @@
 package io.github.piotrkozuch.issuing.card.service;
 
 import io.github.piotrkozuch.issuing.card.action.exception.CardBrandNotSupportedException;
+import io.github.piotrkozuch.issuing.card.repository.CardRepository;
 import io.github.piotrkozuch.issuing.common.types.CardBrand;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,10 +15,12 @@ import static java.lang.Long.parseLong;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.mock;
 
 class CardSensitiveDetailsGeneratorTest {
 
-    private final CardSensitiveDetailsService generator = new CardSensitiveDetailsGenerator();
+    private final CardRepository cardRepository = mock(CardRepository.class);
+    private final CardSensitiveDetailsService generator = new CardSensitiveDetailsGenerator(cardRepository);
 
     @Test
     void should_generate_random_cvv() {

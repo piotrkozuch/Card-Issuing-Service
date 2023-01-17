@@ -1,14 +1,20 @@
 # Card Issuing Service
 
 ### Introduction
-Spring Boot service that expose REST API for issuing cards. 
+
+Spring Boot service that exposes REST API for card issuing. To issue new card you need to:
+
+1. Create new cardholder
+2. Activate created cardholder
+3. Create new card for active cardholder
 
 ### How to build
+
 To build this project run `docker-compose build`. It will build application jar along with docker image.
 
 ### How to run
-To start this application run `docker-compose up`. Application will start and listen on `localhost:9001`
 
+To start this application run `docker-compose up`. Application will start and listen on `localhost:9001`
 
 # REST API
 
@@ -48,8 +54,7 @@ Below you can find REST API description.
         "updatedDate":"2023-01-16T23:53:34.487946472Z"
     }
 
-
-### 2. Get all cardholders 
+### 2. Get all cardholders
 
 ### Request
 
@@ -125,6 +130,7 @@ Below you can find REST API description.
         "createdDate":"2023-01-16T23:28:46.023248Z",
         "updatedDate":"2023-01-16T23:53:34.487946472Z"
     }
+
 ### 4. Activate cardholder
 
 ### Request

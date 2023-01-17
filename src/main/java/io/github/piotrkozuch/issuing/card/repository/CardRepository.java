@@ -4,6 +4,7 @@ import io.github.piotrkozuch.issuing.card.model.Card;
 import io.github.piotrkozuch.issuing.card.model.CardSensitiveDetails;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static io.github.piotrkozuch.issuing.exceptions.ExceptionUtils.entityNotFoundException;
@@ -31,6 +32,10 @@ public class CardRepository {
     public Card getCard(UUID cardId) {
         return cardJpaRepository.findById(cardId)
             .orElseThrow(entityNotFoundException(cardId));
+    }
+
+    public Optional<CardSensitiveDetails> findByPan(String pan){
+        return cardSensitiveDetailsJpaRepository.findByPan(pan);
     }
 
     public List<Card> findAll() {
